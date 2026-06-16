@@ -130,7 +130,7 @@
             left: 100%; /* আলোটি বাম থেকে স্পীডে ডানে চলে যাবে */
         }
 
-        main { padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; padding-bottom: 100px; }
+        main { padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; padding-bottom: 0px; }
 
         /* Sidebar Styling */
                 /* Sidebar 3D glass */
@@ -762,211 +762,301 @@
         };
 
         // State variables
-        let selectedCategory = '';
-        let selectedTopic = '';
-        let selectedIssue = '';
 
-        window.onload = () => {
-            initCategories();
-            checkTheme();
-        };
+        // ===== State Variables =====
+    let selectedCategory = '';
+    let selectedTopic = '';
+    let selectedIssue = '';
 
-        function initCategories() {
-            const catList = document.getElementById('categories-list');
-            catList.innerHTML = '';
-            Object.keys(ticketData).forEach(cat => {
-                let btn = document.createElement('button');
-                btn.className = 'dyn-btn';
-                btn.innerHTML = `${cat} <span>➔</span>`;
-                btn.onclick = () => selectCategory(cat, btn);
-                catList.appendChild(btn);
-            });
-        }
+    // ===== On Page Load =====
+    window.onload = function() {
+        initCategories();
+        checkTheme();
+    };
 
-        function selectCategory(cat, btnElement) {
-            selectedCategory = cat;
-            selectedTopic = ''; selectedIssue = '';
-            
-            // UI Updates
-            updateActiveButtons('categories-list', btnElement);
-            document.getElementById('expand-topic').classList.add('open');
-            document.getElementById('expand-issue').classList.remove('open');
-            document.getElementById('expand-form').classList.remove('open');
-            document.getElementById('outputArea').style.display = 'none';
+    // ===== 1. Categories Load =====
+    function initCategories() {
+        const catList = document.getElementById('categories-list');
+        catList.innerHTML = '';
+        Object.keys(ticketData).forEach(cat => {
+            let btn = document.createElement('button');
+            btn.className = 'dyn-btn';
+            btn.innerHTML = `${cat} <span>➔</span>`;
+            btn.onclick = () => selectCategory(cat, btn);
+            catList.appendChild(btn);
+        });
+    }
 
-            // Render Topics
-            const topList = document.getElementById('topics-list');
-            topList.innerHTML = '';
-            Object.keys(ticketData[cat]).forEach(topic => {
-                let btn = document.createElement('button');
-                btn.className = 'dyn-btn';
-                btn.innerHTML = `${topic} <span>➔</span>`;
-                btn.onclick = () => selectTopic(topic, btn);
-                topList.appendChild(btn);
-            });
-        }
+    // ===== 2. Category Selected =====
+    function selectCategory(cat, btnElement) {
+        selectedCategory = cat;
+        selectedTopic = '';
+        selectedIssue = '';
 
-        function selectTopic(topic, btnElement) {
-            selectedTopic = topic;
-            selectedIssue = '';
+        updateActiveButtons('categories-list', btnElement);
+        document.getElementById('expand-topic').classList.add('open');
+        document.getElementById('expand-issue').classList.remove('open');
+        document.getElementById('expand-form').classList.remove('open');
+        document.getElementById('outputArea').style.display = 'none';
 
-            updateActiveButtons('topics-list', btnElement);
-            document.getElementById('expand-issue').classList.add('open');
-            document.getElementById('expand-form').classList.remove('open');
-            document.getElementById('outputArea').style.display = 'none';
+        const topList = document.getElementById('topics-list');
+        topList.innerHTML = '';
+        Object.keys(ticketData[cat]).forEach(topic => {
+            let btn = document.createElement('button');
+            btn.className = 'dyn-btn';
+            btn.innerHTML = `${topic} <span>➔</span>`;
+            btn.onclick = () => selectTopic(topic, btn);
+            topList.appendChild(btn);
+        });
+    }
 
-            const issList = document.getElementById('issues-list');
-            issList.innerHTML = '';
-            Object.keys(ticketData[selectedCategory][topic]).forEach(issue => {
-                let btn = document.createElement('button');
-                btn.className = 'dyn-btn';
-                btn.innerHTML = `${issue} <span>⇩</span>`;
-                btn.onclick = () => selectIssue(issue, btn);
-                issList.appendChild(btn);
-            });
-        }
+    // ===== 3. Topic Selected =====
+    function selectTopic(topic, btnElement) {
+        selectedTopic = topic;
+        selectedIssue = '';
 
-        function selectIssue(issue, btnElement) {
-            selectedIssue = issue;
+        updateActiveButtons('topics-list', btnElement);
+        document.getElementById('expand-issue').classList.add('open');
+        document.getElementById('expand-form').classList.remove('open');
+        document.getElementById('outputArea').style.display = 'none';
 
-            updateActiveButtons('issues-list', btnElement);
-            document.getElementById('expand-form').classList.add('open');
-            document.getElementById('outputArea').style.display = 'none';
+        const issList = document.getElementById('issues-list');
+        issList.innerHTML = '';
+        Object.keys(ticketData[selectedCategory][topic]).forEach(issue => {
+            let btn = document.createElement('button');
+            btn.className = 'dyn-btn';
+            btn.innerHTML = `${issue} <span>⇩</span>`;
+            btn.onclick = () => selectIssue(issue, btn);
+            issList.appendChild(btn);
+        });
+    }
 
-            const formContainer = document.getElementById('dynamic-inputs');
-            formContainer.innerHTML = '';
+    // ===== 4. Issue Selected (Dynamic Form Generator) =====
+    function selectIssue(issue, btnElement) {
+        selectedIssue = issue;
 
-            const inputsArray = ticketData[selectedCategory][selectedTopic][selectedIssue].inputs;
-            
-            // ডাইনামিক ড্রপডাউনের জন্য ইনডেক্স খুঁজে বের করা
-            const divIdx = inputsArray.findIndex(i => i.includes("বিভাগ"));
-            const distIdx = inputsArray.findIndex(i => i.includes("জেলা"));
-            const upzIdx = inputsArray.findIndex(i => i.includes("উপজেলা"));
+        updateActiveButtons('issues-list', btnElement);
+        document.getElementById('expand-form').classList.add('open');
+        document.getElementById('outputArea').style.display = 'none';
 
-            inputsArray.forEach((inp, idx) => {
-                let div = document.createElement('div');
-                div.className = 'form-group';
-                
-                let label = document.createElement('label');
-                label.innerText = inp;
-                
-                let input;
+        const formContainer = document.getElementById('dynamic-inputs');
+        formContainer.innerHTML = '';
 
-                // যদি ইনপুটটি 'বিভাগ' হয়
-                if (idx === divIdx) {
-                    input = document.createElement('select');
-                    input.className = 'form-input';
-                    input.id = `dyn_inp_${idx}`;
-                    input.innerHTML = '<option value="">বিভাগ নির্বাচন করুন</option>';
-                    
-                    for (let divKey in bdGeographicData) {
-                        let option = document.createElement("option");
-                        option.value = divKey;
-                        option.textContent = bdGeographicData[divKey].name;
-                        input.appendChild(option);
-                    }
-                    
-                    // অনচেঞ্জ ইভেন্ট (জেলা আপডেট করার জন্য)
-                    input.addEventListener('change', function() {
-                        if(distIdx !== -1) updateDynamicDistricts(this.value, `dyn_inp_${distIdx}`, upzIdx !== -1 ? `dyn_inp_${upzIdx}` : null);
-                    });
-                } 
-                // যদি ইনপুটটি 'জেলা' হয়
-                else if (idx === distIdx) {
-                    input = document.createElement('select');
-                    input.className = 'form-input';
-                    input.id = `dyn_inp_${idx}`;
-                    input.innerHTML = '<option value="">আগে বিভাগ সিলেক্ট করুন</option>';
-                    
-                    // অনচেঞ্জ ইভেন্ট (উপজেলা আপডেট করার জন্য)
-                    input.addEventListener('change', function() {
-                        if(divIdx !== -1 && upzIdx !== -1) {
-                            const selectedDiv = document.getElementById(`dyn_inp_${divIdx}`).value;
-                            updateDynamicUpazilas(selectedDiv, this.value, `dyn_inp_${upzIdx}`);
-                        }
-                    });
-                }
-                // যদি ইনপুটটি 'উপজেলা' হয়
-                else if (idx === upzIdx) {
-                    input = document.createElement('select');
-                    input.className = 'form-input';
-                    input.id = `dyn_inp_${idx}`;
-                    input.innerHTML = '<option value="">আগে জেলা সিলেক্ট করুন</option>';
-                }
-                // সাধারণ টেক্সট বা নাম্বার ইনপুট
-                else {
-                    input = document.createElement('input');
-                    input.className = 'form-input';
-                    input.id = `dyn_inp_${idx}`;
-                    input.placeholder = inp + " লিখুন";
+        const inputsArray = ticketData[selectedCategory][selectedTopic][selectedIssue].inputs;
 
-                    if(inp.includes("তারিখ")) {
-                        input.type = "date";
-                    } else if(inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) {
-                        input.type = "text"; 
-                    } else if(inp.includes("নম্বর") || inp.includes("টাকা")) {
-                        input.type = "number";
-                    } else {
-                        input.type = "text";
-                    }
-                }
+        // === Indexes for dynamic dropdowns (using includes for flexibility) ===
+        const divIdx = inputsArray.findIndex(i => i.includes("বিভাগ"));
+        const distIdx = inputsArray.findIndex(i => i.includes("জেলা"));
+        const upzIdx = inputsArray.findIndex(i => i.includes("উপজেলা"));
+        const surveyIdx = inputsArray.findIndex(i => i.includes("সার্ভে") || i.includes("সার্ভের") || i === "খতিয়ানের ধরন");
 
-                div.appendChild(label);
-                div.appendChild(input);
-                formContainer.appendChild(div);
-            });
-        }
+        inputsArray.forEach((inp, idx) => {
+            let div = document.createElement('div');
+            div.className = 'form-group';
 
-        // ডাইনামিক জেলা আপডেট
-        function updateDynamicDistricts(divValue, distId, upzId) {
-            const distSelect = document.getElementById(distId);
-            const upzSelect = upzId ? document.getElementById(upzId) : null;
-            
-            distSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
-            if(upzSelect) upzSelect.innerHTML = '<option value="">আগে জেলা সিলেক্ট করুন</option>';
-            
-            if (divValue && bdGeographicData[divValue]) {
-                const districts = bdGeographicData[divValue].districts;
-                for (let distKey in districts) {
+            let label = document.createElement('label');
+            label.innerText = inp;
+
+            let input;
+
+            // ---------- DIVISION DROPDOWN ----------
+            if (idx === divIdx) {
+                input = document.createElement('select');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                input.innerHTML = '<option value="">বিভাগ নির্বাচন করুন</option>';
+                for (let divKey in bdGeographicData) {
                     let option = document.createElement("option");
-                    option.value = distKey;
-                    option.textContent = districts[distKey].name;
-                    distSelect.appendChild(option);
+                    option.value = divKey;
+                    option.textContent = bdGeographicData[divKey].name;
+                    input.appendChild(option);
                 }
-            }
-        }
-
-        // ডাইনামিক উপজেলা আপডেট
-        function updateDynamicUpazilas(divValue, distValue, upzId) {
-            const upzSelect = document.getElementById(upzId);
-            upzSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
-            
-            if (divValue && distValue && bdGeographicData[divValue].districts[distValue]) {
-                const upazilas = bdGeographicData[divValue].districts[distValue].upazilas;
-                upazilas.forEach(upazila => {
-                    let option = document.createElement("option");
-                    option.value = upazila;
-                    option.textContent = upazila;
-                    upzSelect.appendChild(option);
+                input.addEventListener('change', function() {
+                    if (distIdx !== -1) {
+                        updateDynamicDistricts(this.value, `dyn_inp_${distIdx}`, upzIdx !== -1 ? `dyn_inp_${upzIdx}` : null);
+                    }
                 });
             }
+            // ---------- DISTRICT DROPDOWN ----------
+            else if (idx === distIdx) {
+                input = document.createElement('select');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                if (divIdx !== -1) {
+                    input.innerHTML = '<option value="">আগে বিভাগ সিলেক্ট করুন</option>';
+                } else {
+                    input.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
+                    for (let divKey in bdGeographicData) {
+                        for (let distKey in bdGeographicData[divKey].districts) {
+                            let option = document.createElement("option");
+                            option.value = distKey;
+                            option.textContent = bdGeographicData[divKey].districts[distKey].name;
+                            input.appendChild(option);
+                        }
+                    }
+                }
+                input.addEventListener('change', function() {
+                    if (upzIdx !== -1) {
+                        const selectedDiv = (divIdx !== -1) ? document.getElementById(`dyn_inp_${divIdx}`).value : null;
+                        updateDynamicUpazilas(selectedDiv, this.value, `dyn_inp_${upzIdx}`);
+                    }
+                });
+            }
+            // ---------- UPAZILA DROPDOWN ----------
+            else if (idx === upzIdx) {
+                input = document.createElement('select');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                input.innerHTML = '<option value="">আগে জেলা সিলেক্ট করুন</option>';
+            }
+            // ---------- SURVEY TYPE DROPDOWN ----------
+            else if (idx === surveyIdx) {
+                input = document.createElement('select');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                const options = [
+                    { value: "", text: "জরিপ সিলেক্ট করুন" },
+                    { value: "সি এস", text: "সি এস" },
+                    { value: "এস এ", text: "এস এ" },
+                    { value: "আর এস", text: "আর এস" },
+                    { value: "বি আর এস", text: "বি আর এস" },
+                    { value: "বি ডি এস", text: "বি ডি এস" },
+                    { value: "নামজারি", text: "নামজারি" }
+                ];
+                options.forEach(opt => {
+                    let option = document.createElement("option");
+                    option.value = opt.value;
+                    option.textContent = opt.text;
+                    input.appendChild(option);
+                });
+            }
+            // ---------- NUMBER INPUT (Bengali/English support) ----------
+            else if (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) {
+                input = document.createElement('input');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                input.type = "text";
+                input.inputMode = "numeric";
+                input.placeholder = inp + " লিখুন (বাংলা/ইংরেজি)";
+                input.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^০-৯0-9]/g, '');
+                });
+            }
+            // পাসওয়ার্ড ইনপুট (শুধু ইংরেজি - সাধারণ টেক্সট আকারে)
+            else if (inp === "পাসওয়ার্ড") {
+                input = document.createElement('input');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                input.type = "text";
+                input.placeholder = "পাসওয়ার্ড লিখুন (শুধু ইংরেজি)";
+                input.autocomplete = "off";
+                input.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^A-Za-z0-9!@#$%^&*()_+\-=\[\]{};:'"\\|,.<>\/?]/g, '');
+                });
+            }
+            // ---------- OTHER INPUTS (Date, Text, etc.) ----------
+            else {
+                input = document.createElement('input');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                input.placeholder = inp + " লিখুন";
+
+                if (inp.includes("তারিখ")) {
+                    input.type = "date";
+                } else if (inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) {
+                    input.type = "text";
+                } else {
+                    input.type = "text";
+                }
+            }
+
+            div.appendChild(label);
+            div.appendChild(input);
+            formContainer.appendChild(div);
+        });
+        
+        // ===== ফর্ম সেকশনে স্ক্রল করার জন্য =====
+        setTimeout(() => {
+            const formSection = document.getElementById('expand-form');
+            if (formSection) {
+                formSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }, 300);
+    }
+    
+
+    // ===== Helper: Update District dropdown =====
+    function updateDynamicDistricts(divValue, distId, upzId) {
+        const distSelect = document.getElementById(distId);
+        const upzSelect = upzId ? document.getElementById(upzId) : null;
+
+        distSelect.innerHTML = '<option value="">জেলা নির্বাচন করুন</option>';
+        if (upzSelect) upzSelect.innerHTML = '<option value="">আগে জেলা সিলেক্ট করুন</option>';
+
+        if (divValue && bdGeographicData[divValue]) {
+            const districts = bdGeographicData[divValue].districts;
+            for (let distKey in districts) {
+                let option = document.createElement("option");
+                option.value = distKey;
+                option.textContent = districts[distKey].name;
+                distSelect.appendChild(option);
+            }
+        }
+    }
+
+    // ===== Helper: Update Upazila dropdown =====
+    function updateDynamicUpazilas(divValue, distValue, upzId) {
+        const upzSelect = document.getElementById(upzId);
+        upzSelect.innerHTML = '<option value="">উপজেলা নির্বাচন করুন</option>';
+
+        let foundDiv = divValue;
+        if (!foundDiv && distValue) {
+            for (let divKey in bdGeographicData) {
+                if (bdGeographicData[divKey].districts[distValue]) {
+                    foundDiv = divKey;
+                    break;
+                }
+            }
         }
 
-        function generateTicket() {
-            if(!selectedCategory || !selectedTopic || !selectedIssue) return;
+        if (foundDiv && distValue && bdGeographicData[foundDiv] && bdGeographicData[foundDiv].districts && bdGeographicData[foundDiv].districts[distValue]) {
+            const upazilas = bdGeographicData[foundDiv].districts[distValue].upazilas;
+            upazilas.forEach(upazila => {
+                let option = document.createElement("option");
+                option.value = upazila;
+                option.textContent = upazila;
+                upzSelect.appendChild(option);
+            });
+        }
+    }
 
-            const issueData = ticketData[selectedCategory][selectedTopic][selectedIssue];
-            let templateStr = issueData.template;
-            let appendBuffer = "\n";
-            let needsAppend = templateStr.includes("[All details...]") || templateStr.includes("[All above details automatically mapped...]");
+    // ===== 5. Generate Ticket =====
+    function generateTicket() {
+        if (!selectedCategory || !selectedTopic || !selectedIssue) {
+            alert("দয়া করে প্রথমে ক্যাটাগরি, টপিক ও সমস্যা নির্বাচন করুন।");
+            return;
+        }
 
-            if(needsAppend) templateStr = templateStr.replace(/\[All details...\]|\[All above details automatically mapped...\]/g, "");
+        const issueData = ticketData[selectedCategory][selectedTopic][selectedIssue];
+        let templateStr = issueData.template;
+        let appendBuffer = "\n";
+        let needsAppend = templateStr.includes("[All details...]") || templateStr.includes("[All above details automatically mapped...]");
 
-            issueData.inputs.forEach((inp, idx) => {
-                let element = document.getElementById(`dyn_inp_${idx}`);
-                let val;
+        if (needsAppend) {
+            templateStr = templateStr.replace(/\[All details...\]|\[All above details automatically mapped...\]/g, "");
+        }
 
-                // যদি উপাদানটি Select (ড্রপডাউন) হয়, তবে ভেতরের বাংলা Text নেবে
+        issueData.inputs.forEach((inp, idx) => {
+            let element = document.getElementById(`dyn_inp_${idx}`);
+            let val;
+
+            // ===== Element null check =====
+            if (!element) {
+                val = '[তথ্য প্রদান করা হয়নি]';
+            } else {
                 if (element.tagName === 'SELECT') {
                     if (element.selectedIndex > 0) {
                         val = element.options[element.selectedIndex].text;
@@ -976,53 +1066,63 @@
                 } else {
                     val = element.value || '[তথ্য প্রদান করা হয়নি]';
                 }
-                
-                // If it's a date, format it nicely
-                if(element.type === 'date' && val !== '[তথ্য প্রদান করা হয়নি]') {
-                    const [y,m,d] = val.split('-');
-                    val = `${d}/${m}/${y}`;
+            }
+
+            // ===== Bengali/English number conversion =====
+            if (element && element.tagName !== 'SELECT' && (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ")))) {
+                if (val !== '[তথ্য প্রদান করা হয়নি]' && val !== '') {
+                    const hasBengali = /[০-৯]/.test(val);
+                    if (!hasBengali) {
+                        val = val.replace(/[^0-9]/g, '');
+                    } else {
+                        val = val.replace(/[^০-৯]/g, '');
+                    }
                 }
+            }
 
-                // Replace specific placeholders if they exist
-                if (templateStr.includes(`[${inp}]`)) {
-                    templateStr = templateStr.split(`[${inp}]`).join(val);
-                } else if (needsAppend || (!templateStr.includes(inp) && templateStr.indexOf(":-") === -1)) {
-                    // Append manually if template didn't specify brackets but prompt requested all inputs
-                    appendBuffer += `\n${inp}:- ${val},`;
-                }
-            });
+            // ===== Date formatting =====
+            if (element && element.type === 'date' && val !== '[তথ্য প্রদান করা হয়নি]') {
+                const [y, m, d] = val.split('-');
+                val = `${d}/${m}/${y}`;
+            }
 
-            let finalText = templateStr + (appendBuffer.trim().length > 0 ? "\n\n" + appendBuffer.replace(/,$/, ' |') : "");
+            // ===== Replace placeholders =====
+            if (templateStr.includes(`[${inp}]`)) {
+                templateStr = templateStr.split(`[${inp}]`).join(val);
+            } else if (needsAppend || (!templateStr.includes(inp) && templateStr.indexOf(":-") === -1)) {
+                appendBuffer += `\n${inp}:- ${val},`;
+            }
+        });
 
-            document.getElementById('finalText').innerText = finalText;
-            const outArea = document.getElementById('outputArea');
-            outArea.style.display = 'block';
-            outArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }
+        let finalText = templateStr + (appendBuffer.trim().length > 0 ? "\n\n" + appendBuffer.replace(/,$/, ' |') : "");
 
-        // Utils
-        function updateActiveButtons(containerId, activeBtn) {
-            const btns = document.getElementById(containerId).querySelectorAll('.dyn-btn');
-            btns.forEach(b => b.classList.remove('active'));
-            activeBtn.classList.add('active');
-        }
+        document.getElementById('finalText').innerText = finalText;
+        const outArea = document.getElementById('outputArea');
+        outArea.style.display = 'block';
+        outArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
 
-        function copyToClipboard() {
-            const textToCopy = document.getElementById('finalText').innerText;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                // অ্যালার্টের বদলে টুলটিপ শো করানো হচ্ছে
-                const tooltip = document.getElementById('copiedTooltip');
-                tooltip.classList.add('show');
-                
-                // ২ সেকেন্ড পর টুলটিপ আবার লুকিয়ে যাবে
-                setTimeout(() => {
-                    tooltip.classList.remove('show');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy!', err);
-                alert("কপি করা সম্ভব হয়নি। ম্যানুয়ালি সিলেক্ট করে কপি করুন।");
-            });
-        }
+    // ===== 6. Copy to Clipboard =====
+    function copyToClipboard() {
+        const textToCopy = document.getElementById('finalText').innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const tooltip = document.getElementById('copiedTooltip');
+            tooltip.classList.add('show');
+            setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy!', err);
+            alert("কপি করা সম্ভব হয়নি। ম্যানুয়ালি সিলেক্ট করে কপি করুন।");
+        });
+    }
+
+    // ===== 7. UI Helpers =====
+    function updateActiveButtons(containerId, activeBtn) {
+        const btns = document.getElementById(containerId).querySelectorAll('.dyn-btn');
+        btns.forEach(b => b.classList.remove('active'));
+        activeBtn.classList.add('active');
+    }
 
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
