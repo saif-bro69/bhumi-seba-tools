@@ -541,7 +541,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         <h3>Copy</h3>
                     </button>
-                    <div id="finalText"></div>
+                    <div id="finalText" contenteditable="true" spellcheck="false" style="outline: none; cursor: text;"></div>
                 </div>
             </div>
 
@@ -937,10 +937,11 @@
                 input.className = 'form-input';
                 input.id = `dyn_inp_${idx}`;
                 input.type = "text";
-                input.inputMode = "numeric";
+                input.inputMode = "text"; // numeric থেকে text করে দিলাম যাতে মোবাইল কীবোর্ডে / সহজে পাওয়া যায়
                 input.placeholder = inp + " লিখুন (বাংলা/ইংরেজি)";
                 input.addEventListener('input', function() {
-                    this.value = this.value.replace(/[^০-৯0-9]/g, '');
+                    // ০-৯, 0-9 এবং / চিহ্নটি অ্যালাউ করা হলো
+                    this.value = this.value.replace(/[^০-৯0-9/]/g, '');
                 });
             }
             else if (inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) {
@@ -1088,12 +1089,12 @@
             if (element && element.tagName !== 'SELECT' && 
                (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) && 
                !inp.includes("ট্রানজেকশন") && !inp.includes("ট্রাঞ্জেকশন")) {
-            if (val !== '[তথ্য প্রদান করা হয়নি]' && val !== '') {
+                if (val !== '[তথ্য প্রদান করা হয়নি]' && val !== '') {
                     const hasBengali = /[০-৯]/.test(val);
                     if (!hasBengali) {
-                        val = val.replace(/[^0-9]/g, '');
+                        val = val.replace(/[^0-9/]/g, ''); // এখানে / যোগ করা হলো
                     } else {
-                        val = val.replace(/[^০-৯]/g, '');
+                        val = val.replace(/[^০-৯/]/g, ''); // এখানেও / যোগ করা হলো
                     }
                 }
             }
