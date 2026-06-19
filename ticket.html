@@ -931,7 +931,7 @@
                 });
             }
             // ---------- NUMBER INPUT (Bengali/English support) ----------
-            else if (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) {
+            else if ((inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) && !inp.includes("ট্রানজেকশন") && !inp.includes("ট্রাঞ্জেকশন")) {
                 input = document.createElement('input');
                 input.className = 'form-input';
                 input.id = `dyn_inp_${idx}`;
@@ -940,6 +940,17 @@
                 input.placeholder = inp + " লিখুন (বাংলা/ইংরেজি)";
                 input.addEventListener('input', function() {
                     this.value = this.value.replace(/[^০-৯0-9]/g, '');
+                });
+            }
+            else if (inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) {
+                input = document.createElement('input');
+                input.className = 'form-input';
+                input.id = `dyn_inp_${idx}`;
+                input.type = "text";
+                input.placeholder = inp + " লিখুন (শুধু ইংরেজি অক্ষর ও সংখ্যা)";
+                input.addEventListener('input', function() {
+                    // শুধু ইংরেজি অক্ষর ও সংখ্যা রাখবে এবং সাথে সাথেই বড় হাতের (Uppercase) করে দেবে
+                    this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
                 });
             }
             // পাসওয়ার্ড ইনপুট (শুধু ইংরেজি - সাধারণ টেক্সট আকারে)
@@ -1068,9 +1079,15 @@
                 }
             }
 
+            // ===== ট্রানজেকশন নাম্বারকে আপারকেস করা =====
+            if ((inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) && val !== '[তথ্য প্রদান করা হয়নি]') {
+                val = val.toUpperCase();
+            }
             // ===== Bengali/English number conversion =====
-            if (element && element.tagName !== 'SELECT' && (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ")))) {
-                if (val !== '[তথ্য প্রদান করা হয়নি]' && val !== '') {
+            if (element && element.tagName !== 'SELECT' && 
+               (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) && 
+               !inp.includes("ট্রানজেকশন") && !inp.includes("ট্রাঞ্জেকশন")) {
+            if (val !== '[তথ্য প্রদান করা হয়নি]' && val !== '') {
                     const hasBengali = /[০-৯]/.test(val);
                     if (!hasBengali) {
                         val = val.replace(/[^0-9]/g, '');
