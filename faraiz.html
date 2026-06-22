@@ -336,7 +336,13 @@
         #resultArea { margin-top: 30px; display: none; background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border-color); }
         .result-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .result-table th, .result-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        .result-table th { background: #c4e0ff; font-weight: bold; }
+        .result-table th { background: #c4e0ff; font-weight: bold; color: #0f172a; }
+
+        /* ডার্ক মোডের জন্য স্পেশাল কালার */
+        [data-theme="dark"] .result-table th {
+            background: var(--primary-blue);
+            color: #ffffff; /* ডার্ক মোডে লেখার রঙ সাদা করার জন্য */
+        }
 .chart-container {
     width: 100%;
     max-width: 550px;
@@ -1148,12 +1154,12 @@
 
                 for(let i=0; i<indivCount; i++) {
                     let name = indivCount > 1 ? `${baseName} - ${toBn(i+1)}` : baseName;
-                    let isDark = document.body.getAttribute('data-theme') === 'dark';
-                    let percentColor = isDark ? '#ffffff' : '#1a56db';
                     
+                    
+                    // ওপরের ২ লাইনের আর কোনো প্রয়োজন নেই, সরাসরি নিচের মতো করে লিখুন:
                     let row = `<tr>
                         <td style="font-weight:600;">${name}</td>
-                        <td style="color:${percentColor}; font-weight:bold;">${toBn(percent)}%</td>
+                        <td style="color: var(--percent-color); font-weight:bold;">${toBn(percent)}%</td>
                         <td>${toBn((inputs.land * perPersonShare).toFixed(3))}</td>
                         <td>${toBn((inputs.gold * perPersonShare).toFixed(3))}</td>
                         <td>${toBn((inputs.silver * perPersonShare).toFixed(3))}</td>
