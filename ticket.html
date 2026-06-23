@@ -307,8 +307,9 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
         }
         .form-input:focus {
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15);
+            border-color: var(--primary-blue) !important;
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15) !important;
+            outline: none;
         }    
         .form-input:hover {
             border-color: #93c5fd; /* হালকা নীল বর্ডার */
@@ -615,11 +616,15 @@
                 "ডি সি আর ফী পেমেন্ট সংক্রান্ত": {
                     "DCR ফী প্রদান করেছে কিন্তু পেমেন্ট সফল হয়নি": {
                         inputs: ["আবেদনের বিভাগ", "আবেদন নম্বর", "আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর", "জন্ম তারিখ", "আবেদনে ব্যবহৃত মোবাইল নম্বর", "পেমেন্ট তারিখ", "পেমেন্ট গেটওয়ে", "পেমেন্ট এর মোবাইল নম্বর", "ট্রাঞ্জেকশন নম্বর"],
-                        template: "নাগরিক DCR ফী প্রদান করেছিল এক্ষেত্রে টাকা কেটে নিয়েছে কিন্তু পেমেন্ট সফল হয়নি। নাগরিক সংশ্লিষ্ট গেটওয়ের নিকট যোগাযোগ করেছেন তারা জানিয়েছেন তাদের দিক থেকে পেমেন্ট সফল হয়েছে।\n\nআবেদনের বিভাগ:- [আবেদনের বিভাগ],\nআবেদন নম্বর:- [আবেদন নম্বর],\nআবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর:- [আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর],\nজন্ম তারিখ:- [জন্ম তারিখ],\nআবেদনে ব্যবহৃত মোবাইল নম্বর:- [আবেদনে ব্যবহৃত মোবাইল নম্বর],\nপেমেন্ট তারিখ:- [পেমেন্ট তারিখ],\nপেমেন্ট গেটওয়ে:- [পেমেন্ট গেটওয়ে],\nপেমেন্ট এর মোবাইল নম্বর:- [পেমেন্ট এর মোবাইল নম্বর],\nট্রাঞ্জেকশন নম্বর:- [ট্রাঞ্জেকশন নম্বর] |"
+                        template: "নাগরিক DCR ফী প্রদান করেছিল এক্ষেত্রে টাকা কেটে নিয়েছে কিন্তু দেখতে পাচ্ছেন পেমেন্ট সফল হয়নি। নাগরিক সংশ্লিষ্ট গেটওয়ের নিকট যোগাযোগ করেছেন তারা জানিয়েছে, তাদের দিক থেকে পেমেন্ট সফল হয়েছে।\n\nআবেদনের বিভাগ:- [আবেদনের বিভাগ],\nআবেদন নম্বর:- [আবেদন নম্বর],\nআবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর:- [আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর],\nজন্ম তারিখ:- [জন্ম তারিখ],\nআবেদনে ব্যবহৃত মোবাইল নম্বর:- [আবেদনে ব্যবহৃত মোবাইল নম্বর],\nপেমেন্ট তারিখ:- [পেমেন্ট তারিখ],\nপেমেন্ট গেটওয়ে:- [পেমেন্ট গেটওয়ে],\nপেমেন্ট এর মোবাইল নম্বর:- [পেমেন্ট এর মোবাইল নম্বর],\nট্রাঞ্জেকশন নম্বর:- [ট্রাঞ্জেকশন নম্বর] |"
+                    },
+                    "দুঃখিত ! আপনার পেমেন্ট পেন্ডিং অবস্থায় আছে": {
+                        inputs: ["আবেদনের বিভাগ", "আবেদন নম্বর", "আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর", "জন্ম তারিখ", "আবেদনে ব্যবহৃত মোবাইল নম্বর", "পেমেন্ট তারিখ", "পেমেন্ট গেটওয়ে", "পেমেন্ট এর মোবাইল নম্বর", "ট্রাঞ্জেকশন নম্বর"],
+                        template: "নাগরিক DCR ফী প্রদান করেছিল এক্ষেত্রে টাকা কেটে নিয়েছে কিন্তু দেখতে পাচ্ছেন- পেমেন্ট সফল হয়নি। পেমেন্ট ভেরিফাইড করার পর দেখতে পাচ্ছেন (দুঃখিত ! আপনার পেমেন্ট পেন্ডিং অবস্থায় আছে ) ।\n\nআবেদনের বিভাগ:- [আবেদনের বিভাগ],\nআবেদন নম্বর:- [আবেদন নম্বর],\nআবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর:- [আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর],\nজন্ম তারিখ:- [জন্ম তারিখ],\nআবেদনে ব্যবহৃত মোবাইল নম্বর:- [আবেদনে ব্যবহৃত মোবাইল নম্বর],\nপেমেন্ট তারিখ:- [পেমেন্ট তারিখ],\nপেমেন্ট গেটওয়ে:- [পেমেন্ট গেটওয়ে],\nপেমেন্ট এর মোবাইল নম্বর:- [পেমেন্ট এর মোবাইল নম্বর],\nট্রাঞ্জেকশন নম্বর:- [ট্রাঞ্জেকশন নম্বর] |"
                     },
                     "DCR ফী প্রদান করেছে কিন্তু পুনরায় পেমেন্ট অপশন দেখতে পাচ্ছেন": {
                         inputs: ["আবেদনের বিভাগ", "আবেদন নম্বর", "আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর", "জন্ম তারিখ", "আবেদনে ব্যবহৃত মোবাইল নম্বর", "পেমেন্ট তারিখ", "পেমেন্ট গেটওয়ে", "পেমেন্ট এর মোবাইল নম্বর", "ট্রাঞ্জেকশন নম্বর"],
-                        template: "নাগরিক DCR ফী পরিশোধ করেছেন কিন্তু ডিসিআর কপি পাননি। পুনরায় পেমেন্ট অপশন দেখতে পাচ্ছেন। নাগরিক সংশ্লিষ্ট গেটওয়ের নিকট যোগাযোগ করেছেন তারা জানিয়েছেন তাদের দিক থেকে পেমেন্ট সফল হয়েছে।\n\nআবেদনের বিভাগ:- [আবেদনের বিভাগ],\nআবেদন নম্বর:- [আবেদন নম্বর],\nআবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর:- [আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর],\nজন্ম তারিখ:- [জন্ম তারিখ],\nআবেদনে ব্যবহৃত মোবাইল নম্বর:- [আবেদনে ব্যবহৃত মোবাইল নম্বর],\nপেমেন্ট তারিখ:- [পেমেন্ট তারিখ],\nপেমেন্ট গেটওয়ে:- [পেমেন্ট গেটওয়ে],\nপেমেন্ট এর মোবাইল নম্বর:- [পেমেন্ট এর মোবাইল নম্বর], \nট্রাঞ্জেকশন নম্বর:- [ট্রাঞ্জেকশন নম্বর] |"
+                        template: "নাগরিক DCR ফী পরিশোধ করেছেন কিন্তু ডিসিআর কপি এবং খতিয়ান এখনো পাননি। বর্তমানে তিনি পুনরায় পেমেন্ট অপশন দেখতে পাচ্ছেন। নাগরিক সংশ্লিষ্ট গেটওয়ের নিকট যোগাযোগ করেছেন, তারা জানিয়েছেন তাদের দিক থেকে পেমেন্ট সফল হয়েছে।\n\nআবেদনের বিভাগ:- [আবেদনের বিভাগ],\nআবেদন নম্বর:- [আবেদন নম্বর],\nআবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর:- [আবেদনে ব্যবহৃত জাতীয় পরিচয়পত্র নম্বর],\nজন্ম তারিখ:- [জন্ম তারিখ],\nআবেদনে ব্যবহৃত মোবাইল নম্বর:- [আবেদনে ব্যবহৃত মোবাইল নম্বর],\nপেমেন্ট তারিখ:- [পেমেন্ট তারিখ],\nপেমেন্ট গেটওয়ে:- [পেমেন্ট গেটওয়ে],\nপেমেন্ট এর মোবাইল নম্বর:- [পেমেন্ট এর মোবাইল নম্বর], \nট্রাঞ্জেকশন নম্বর:- [ট্রাঞ্জেকশন নম্বর] |"
                     }
                 },
                 "খতিয়ান সংক্রান্ত": {
@@ -772,6 +777,24 @@
     window.onload = function() {
         initCategories();
         checkTheme();
+
+        // নতুন কোড: ইউজার ইনপুট দেওয়া শুরু করলে বা সিলেক্ট করলে লাল বর্ডার স্থায়ীভাবে মুছে যাবে
+        const dynamicInputs = document.getElementById('dynamic-inputs');
+        if (dynamicInputs) {
+            // লেখার জন্য (Text Inputs)
+            dynamicInputs.addEventListener('input', function(e) {
+                if (e.target.classList.contains('form-input')) {
+                    e.target.style.borderColor = ''; // ইনলাইন লাল বর্ডার মুছে যাবে
+                }
+            });
+            
+            // ড্রপডাউন সিলেকশনের জন্য (Select/Dropdowns)
+            dynamicInputs.addEventListener('change', function(e) {
+                if (e.target.classList.contains('form-input')) {
+                    e.target.style.borderColor = ''; // ইনলাইন লাল বর্ডার মুছে যাবে
+                }
+            });
+        }
     };
 
     // ===== 1. Categories Load =====
@@ -941,7 +964,7 @@
                 input.placeholder = inp + " লিখুন (বাংলা/ইংরেজি)";
                 input.addEventListener('input', function() {
                     // ০-৯, 0-9 এবং / চিহ্নটি অ্যালাউ করা হলো
-                    this.value = this.value.replace(/[^০-৯0-9/]/g, '');
+                    this.value = this.value.replace(/[^০-৯0-9/\-\,\s]/g, '');
                 });
             }
             else if (inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) {
@@ -988,16 +1011,43 @@
             formContainer.appendChild(div);
         });
         
-        // ===== ফর্ম সেকশনে স্ক্রল করার জন্য =====
+        // ===== ফর্ম সেকশনে মাউসের মতো স্মুথ স্ক্রল করার জন্য (ফুটার বাদে) =====
         setTimeout(() => {
             const formSection = document.getElementById('expand-form');
             if (formSection) {
-                formSection.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
+                // এলিমেন্টের বর্তমান পজিশন বের করা
+                const targetPosition = formSection.getBoundingClientRect().top + window.pageYOffset;
+                const startPosition = window.pageYOffset;
+                
+                // এখানে ফুটারের উপরে স্ক্রল থামানোর জন্য আমরা targetPosition থেকে ২০ পিক্সেল কম স্ক্রল করব 
+                // (প্রয়োজনে আপনি - 20 এর জায়গায় - 30 বা - 40 দিয়ে আপনার স্ক্রিন অনুযায়ী অ্যাডজাস্ট করতে পারেন)
+                const distance = (targetPosition - 100) - startPosition;
+                
+                // স্ক্রলিংয়ের সময়কাল (১০০০ মি.সে. = ১ সেকেন্ড)
+                const duration = 1000; 
+                let startTimestamp = null;
+
+                // স্মুথ ইজিং (Easing) ফাংশন
+                function smoothScrollStep(timestamp) {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const elapsed = timestamp - startTimestamp;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    // EaseInOutCubic ফর্মুলা (গতি নিয়ন্ত্রণ)
+                    const easeProgress = progress < 0.5 
+                        ? 4 * progress * progress * progress 
+                        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+                    window.scrollTo(0, startPosition + (distance * easeProgress));
+
+                    if (elapsed < duration) {
+                        window.requestAnimationFrame(smoothScrollStep);
+                    }
+                }
+
+                window.requestAnimationFrame(smoothScrollStep);
             }
-        }, 300);
+        }, 200);
     }
     
 
@@ -1046,7 +1096,7 @@
         }
     }
 
-    // ===== 5. Generate Ticket =====
+    // ===== 5. Generate Ticket (100% Bug Free Version) =====
     function generateTicket() {
         if (!selectedCategory || !selectedTopic || !selectedIssue) {
             alert("দয়া করে প্রথমে ক্যাটাগরি, টপিক ও সমস্যা নির্বাচন করুন।");
@@ -1064,48 +1114,63 @@
 
         issueData.inputs.forEach((inp, idx) => {
             let element = document.getElementById(`dyn_inp_${idx}`);
-            let val;
+            let val = '';
 
-            // ===== Element null check =====
+            // ১. প্রথমে ইনপুট বক্সের বর্ডার রিসেট করে নেওয়া
+            if (element) {
+                element.style.borderColor = ''; 
+            }
+
+            // ২. ইনপুট চেক করা এবং খালি থাকলে লাল বর্ডার ও ডিফল্ট টেক্সট দেওয়া
+            // বাগ ফিক্স: একটি নির্দিষ্ট বানান ব্যবহার করা হলো যাতে কোথাও কনফ্লিক্ট না হয়
+            const emptyText = '[তথ্য প্রদান করা হয়নি]'; 
+
             if (!element) {
-                val = '[তথ্য প্রদান করা হয়নি]';
+                val = emptyText;
             } else {
                 if (element.tagName === 'SELECT') {
                     if (element.selectedIndex > 0) {
                         val = element.options[element.selectedIndex].text;
                     } else {
-                        val = '[তথ্য প্রদান করা হয়নি]';
+                        val = emptyText;
+                        element.style.borderColor = '#ef4444'; // লাল বর্ডার
                     }
                 } else {
-                    val = element.value || '[তথ্য প্রদান করা হয়নি]';
-                }
-            }
-
-            // ===== ট্রানজেকশন নাম্বারকে আপারকেস করা =====
-            if ((inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) && val !== '[তথ্য প্রদান করা হয়নি]') {
-                val = val.toUpperCase();
-            }
-            // ===== Bengali/English number conversion =====
-            if (element && element.tagName !== 'SELECT' && 
-               (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) && 
-               !inp.includes("ট্রানজেকশন") && !inp.includes("ট্রাঞ্জেকশন")) {
-                if (val !== '[তথ্য প্রদান করা হয়নি]' && val !== '') {
-                    const hasBengali = /[০-৯]/.test(val);
-                    if (!hasBengali) {
-                        val = val.replace(/[^0-9/]/g, ''); // এখানে / যোগ করা হলো
-                    } else {
-                        val = val.replace(/[^০-৯/]/g, ''); // এখানেও / যোগ করা হলো
+                    val = element.value.trim();
+                    if (val === '') {
+                        val = emptyText;
+                        element.style.borderColor = '#ef4444'; // লাল বর্ডার
                     }
                 }
             }
 
-            // ===== Date formatting =====
-            if (element && element.type === 'date' && val !== '[তথ্য প্রদান করা হয়নি]') {
+            // ৩. ট্রানজেকশন নাম্বারকে আপারকেস করা
+            if ((inp.includes("ট্রানজেকশন") || inp.includes("ট্রাঞ্জেকশন")) && val !== emptyText) {
+                val = val.toUpperCase();
+            }
+
+            // ৪. Bengali/English number conversion (The Bug Fix)
+            if (element && element.tagName !== 'SELECT' && (inp.includes("নম্বর") || inp.includes("টাকা") || inp.includes("পরিমান") || (inp.includes("ভাগ") && !inp.includes("বিভাগ"))) && !inp.includes("ট্রানজেকশন") && !inp.includes("ট্রাঞ্জেকশন")) {
+                // বাগ ফিক্স: এখানে emptyText সঠিকভাবে চেক করা হলো
+                if (val !== emptyText) {
+                    const hasBengali = /[০-৯]/.test(val);
+                    if (!hasBengali) {
+                        // ইংরেজি সংখ্যা ছাড়া স্ল্যাশ (/), হাইফেন (-), কমা (,) ও স্পেস (\s) অ্যালাউ করা হলো
+                        val = val.replace(/[^0-9/\-,\s]/g, ''); 
+                    } else {
+                        // বাংলা সংখ্যা ছাড়া স্ল্যাশ (/), হাইফেন (-), কমা (,) ও স্পেস (\s) অ্যালাউ করা হলো
+                        val = val.replace(/[^০-৯/\-,\s]/g, ''); 
+                    }
+                }
+            }
+
+            // ৫. Date formatting (Bug Fix: Added safely check for split)
+            if (element && element.type === 'date' && val !== emptyText && val.includes('-')) {
                 const [y, m, d] = val.split('-');
                 val = `${d}/${m}/${y}`;
             }
 
-            // ===== Replace placeholders =====
+            // ৬. Replace placeholders
             if (templateStr.includes(`[${inp}]`)) {
                 templateStr = templateStr.split(`[${inp}]`).join(val);
             } else if (needsAppend || (!templateStr.includes(inp) && templateStr.indexOf(":-") === -1)) {
@@ -1113,14 +1178,21 @@
             }
         });
 
+        // ৭. finalText তৈরি করা
         let finalText = templateStr + (appendBuffer.trim().length > 0 ? "\n\n" + appendBuffer.replace(/,$/, ' |') : "");
 
-        document.getElementById('finalText').innerText = finalText;
+        // ৮. ফাইনাল টেক্সটে যত জায়গায় [তথ্য প্রদান করা হয়নি] আছে, সবগুলোকে লাল কালার করে দেওয়া
+        // Regular Expression এ "হয়নি" এবং "হয়নি" দুইটাই রাখা হলো এক্সট্রা সেফটির জন্য
+        let formattedText = finalText.replace(/\[তথ্য প্রদান করা হয়নি\]|\[তথ্য প্রদান করা হয়নি\]/g, '<span style="color: #ef4444; font-weight: bold;">[তথ্য প্রদান করা হয়নি]</span>');
+
+        // ৯. নিউ লাইন (\n) কে <br> দিয়ে রিপ্লেস করে আউটপুট বক্সে পাঠানো
+        document.getElementById('finalText').innerHTML = formattedText.replace(/\n/g, '<br>');
+
+        // ১০. আউটপুট এরিয়া স্ক্রিনে দেখানো ও স্ক্রোল করা
         const outArea = document.getElementById('outputArea');
         outArea.style.display = 'block';
         outArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
-
     // ===== 6. Copy to Clipboard =====
     function copyToClipboard() {
         const textToCopy = document.getElementById('finalText').innerText;
