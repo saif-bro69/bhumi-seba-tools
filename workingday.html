@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>কার্যদিবস ক্যালকুলেটর | ডিজিটাল ল্যান্ড টুলস</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         /* ----- Root Variables (consistent with main project) ----- */
         :root {
@@ -389,22 +390,33 @@
         .form-input {
             width: 100%;
             padding: 0.8rem 1.2rem;
-            border: 1px solid var(--border-color);
+            border: 1.5px solid var(--border-color);
             border-radius: 60px;
             background: var(--input-bg);
             color: var(--text-dark);
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
         }
         .form-input:focus {
+            border-color: var(--primary-blue) !important;
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15) !important;
             outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(26,86,219,0.2);
         }
         .form-input:hover {
-            border-color: #93c5fd; /* হালকা নীল বর্ডার */
-            transform: translateY(-5px); /* খুব সামান্য উপরে উঠবে */
-            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15);
+            border-color: var(--primary-blue) !important;
+            transform: translateY(-4px); /* খুব সামান্য উপরে উঠবে */
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15) !important;
+            
         }
+        /* 🎯 প্লেসহোল্ডারের ফন্ট সাইজ বড় এবং স্পষ্ট করার জন্য */
+        .form-input::placeholder {
+            font-size: 1px !important;
+            font-weight: 500 !important;
+            opacity: 0.85 !important;
+            color: var(--text-soft);
+        }
+        .form-input:-ms-input-placeholder { font-size: 19px !important; }
+        .form-input::-ms-input-placeholder { font-size: 19px !important; }
 
         .btn-primary {
             background: var(--primary-blue);
@@ -415,17 +427,18 @@
             font-weight: 700;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             width: 100%;
+            box-shadow: 0 10px 20px rgba(26, 86, 219, 0.3), 0 6px 6px rgba(0, 0, 0, 0.1) !important;
         }
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--primary-blue), #10b981);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px -8px rgba(26,86,219,0.4);
+            box-shadow: 0 18px 25px rgba(26, 86, 219, 0.4), 0 8px 10px rgba(0, 0, 0, 0.1) !important;
         }
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--primary-blue);
+            border: 1.5px solid var(--primary-blue);
             color: var(--primary-blue);
             border-radius: 60px;
             padding: 8px 16px;
@@ -436,6 +449,8 @@
         .btn-outline:hover {
             background: var(--primary-blue);
             color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 18px 25px rgba(26, 86, 219, 0.4), 0 8px 10px rgba(0, 0, 0, 0.1) !important;
         }
 
         .stat-number {
@@ -477,7 +492,7 @@
             color: var(--primary-blue);
         }
         .badge-weekend {
-            background: linear-gradient(135deg, var(--primary-blue), #10b981);
+            background: linear-gradient(135deg, var(--primary-blue), #2eb387);
             color: white;
         }
         .badge-holiday {
@@ -507,6 +522,36 @@
             cursor: pointer;
             font-weight: bold;
         }
+        .custom-cuti{
+            padding-bottom:10px;
+        }
+        /* ব্রাউজারের ডিফল্ট ক্যালেন্ডার আইকন লুকিয়ে ফেলার জন্য */
+        .form-input::-webkit-calendar-picker-indicator {
+            opacity: 0;
+            cursor: pointer;
+            width: 37px;
+            height: 37px;
+            position: absolute;
+            right: 15px;
+            z-index: 2;
+        }
+
+        /* ইনপুট টাইপ ডেট এর জন্য মডার্ন ব্যাকগ্রাউন্ড আইকন সেটআপ */
+        input[type="date"].form-input {
+            position: relative;
+            /* ব্যাকগ্রাউন্ড হিসেবে ক্যালেন্ডার ইমোজি ব্যবহার */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-calendar3' viewBox='0 0 16 16'><path d='M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z'/><path d='M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 20px) center; /* ডানদিক থেকে ২০ পিক্সেল বামে থাকবে */
+            background-size: 18px;
+            padding-right: 45px; /* লেখা যেন আইকনের উপর চলে না যায় */
+        }
+
+        /* ডার্ক মোডে আইকনটির কালার পরিবর্তন করার জন্য (ঐচ্ছিক কিন্তু সুন্দর দেখাবে) */
+        [data-theme="dark"] input[type="date"].form-input {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23cbd5e1' class='bi bi-calendar3' viewBox='0 0 16 16'><path d='M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z'/><path d='M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>");
+        }
+        
 
         /* Footer */
         footer{
@@ -565,6 +610,7 @@
             color: #00a9f2;
             text-shadow: 0 0 12px rgba(96,165,250,0.7);
         }
+        
 
         /* Responsive */
         @media(max-width:768px){
@@ -664,7 +710,7 @@
                     <input type="date" id="endDate" class="form-input" value="">
                 </div>
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" id="includeEnd" checked style="width: 18px; height: 18px;">
+                    <input type="checkbox" id="includeEnd" style="width: 18px; height: 18px;">
                     <label for="includeEnd">
                     শেষ তারিখ গণনায় অন্তর্ভুক্ত করুন
                     </label>
@@ -672,7 +718,7 @@
                 <button class="btn-primary" onclick="calculateWorkingDays()">⚡ কার্যদিবস হিসাব করুন</button>
 
                 <div style="margin-top: 1.8rem;">
-                    <h4>🎯 কাস্টম ছুটি যুক্ত করুন</h4>
+                    <h4 class="custom-cuti">🎯 কাস্টম ছুটি যুক্ত করুন</h4>
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <input type="date" id="customHolidayDate" class="form-input" style="flex:1;">
                         <input type="text" id="customHolidayReason" placeholder="কারণ (যেমন: ঈদ/পূজা )" class="form-input" style="flex:2;">
@@ -797,6 +843,7 @@
     };
     let userCustomHolidays = [];  // { date: "YYYY-MM-DD", reason: "..." }
 
+    
     // load custom holidays from localStorage
     function loadCustomHolidays() {
         let stored = localStorage.getItem('workingday_holidays');
@@ -965,8 +1012,9 @@
         let endInput = document.getElementById('endDate').value;
         let includeEnd = document.getElementById('includeEnd').checked;
 
-        if (!startInput || !endInput) {
-            alert("দয়া করে শুরুর ও শেষের তারিখ নির্বাচন করুন।");
+        // 👇 পরিবর্তিত কোড (শুধু শুরুর তারিখ চেক করবে)
+        if (!startInput) {
+            alert("দয়া করে শুরুর তারিখ নির্বাচন করুন।");
             return;
         }
         let start = parseDate(startInput);
@@ -1098,6 +1146,18 @@
         }
         loadCustomHolidays();
         // No initial calculation – fields are empty.
+        // 👇 শুধু শেষের তারিখ আজকের তারিখে সেট করুন
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${year}-${month}-${day}`;
+
+        const endDateInput = document.getElementById('endDate');
+        if (endDateInput && !endDateInput.value) {
+            endDateInput.value = todayStr;
+        }
+        
     });
 
     // Side Bar----------------------------------------------------------------------------------------------------------
