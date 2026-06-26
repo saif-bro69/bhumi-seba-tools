@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>কার্যদিবস ক্যালকুলেটর | ডিজিটাল ল্যান্ড টুলস</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* ----- Root Variables (consistent with main project) ----- */
         :root {
@@ -151,7 +153,7 @@
 
             font-size: 34px;
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(9px);
             border: 1px solid var(--border-color);
             border-radius: 60px;
 
@@ -408,15 +410,15 @@
             box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15) !important;
             
         }
-        /* 🎯 প্লেসহোল্ডারের ফন্ট সাইজ বড় এবং স্পষ্ট করার জন্য */
+        /* 🎯 প্লেসহোল্ডারের ফন্ট সাইজ স্পষ্ট করার জন্য */
         .form-input::placeholder {
-            font-size: 1px !important;
+            font-size: 14px !important; 
             font-weight: 500 !important;
             opacity: 0.85 !important;
             color: var(--text-soft);
         }
-        .form-input:-ms-input-placeholder { font-size: 19px !important; }
-        .form-input::-ms-input-placeholder { font-size: 19px !important; }
+        .form-input:-ms-input-placeholder { font-size: 14px !important; }
+        .form-input::-ms-input-placeholder { font-size: 14px !important; }
 
         .btn-primary {
             background: var(--primary-blue);
@@ -552,8 +554,85 @@
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23cbd5e1' class='bi bi-calendar3' viewBox='0 0 16 16'><path d='M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z'/><path d='M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg>");
         }
         
+        .glass-popup{
 
-        /* Footer */
+            background: rgba(255,255,255,.10) !important;
+
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+
+            border:1px solid rgba(255,255,255,.22) !important;
+
+            border-radius:28px;
+
+            box-shadow:
+                0 15px 45px rgba(0,0,0,.30),
+                inset 0 1px rgba(255,255,255,.25),
+                inset 0 -1px rgba(255,255,255,.08);
+
+            color:white;
+
+            overflow:hidden;
+        }
+
+        .glass-popup::before{
+
+            content:"";
+
+            position:absolute;
+
+            top:0;
+            left:-60%;
+
+            width:50%;
+            height:100%;
+
+            background:linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,.25),
+                transparent
+            );
+
+            transform:skewX(-25deg);
+        }
+
+        .glass-btn{
+            border-radius:50px !important;
+            padding:10px 30px !important;
+            font-size:15px !important;
+            font-weight:700 !important;
+
+            background:linear-gradient(135deg,#2563eb,#10b981)!important;
+
+            box-shadow:
+                0 8px 20px rgba(37,99,235,.35),
+                inset 0 1px 0 rgba(255,255,255,.4)!important;
+
+            transition:.3s;
+        }
+
+        .glass-btn:hover{
+            transform:translateY(-2px) scale(1.03);
+        }
+        .swal2-title{
+            color: #000 !important;
+            font-weight: 700 !important;
+
+            text-shadow:
+                0 0px 2px rgba(255,255,255,.7),
+                0 2px 8px rgba(0,0,0,.18);
+        }
+        /* Dark Mode */
+        [data-theme="dark"] .swal2-title{
+            color: #ffffff !important;
+        }
+
+        .swal2-html-container{
+            color: #fff !important;
+        }
+
+        /*----------- Footer -------------*/
         footer{
             margin-top: 30px;
             padding: 22px 15px;
@@ -725,7 +804,9 @@
                         <button class="btn-outline" onclick="addCustomHoliday()">+ যোগ</button>
                     </div>
                     <div id="customHolidayList" class="custom-holiday-list"></div>
-                   <p class="form-label" style="font-size: 0.7rem; margin-top: 8px;">📌 স্থির ছুটি: ২১ ফেব্রুয়ারি, ২৬ মার্চ, ১৪ এপ্রিল, ১ মে, ১৫ আগস্ট, ১৬ ডিসেম্বর। প্রধান ধর্মীয় উৎসবসমূহ (২০২৬-২০৩০) |<br>শুক্র+শনিবার সাপ্তাহিক ছুটি স্বয়ংক্রিয়ভাবে বাদ যায়।</p>
+                   <p class="form-label" style="font-size: 0.7rem; margin-top: 8px;">
+                        📌 স্থির ছুটি: ২১ ফেব্রুয়ারি, ১৭ মার্চ, ২৬ মার্চ, ১৪ এপ্রিল, ১ মে, ১৫ আগস্ট, ১৬ ডিসেম্বর ও 25 ডিসেম্বর।
+                    </p>
                 </div>
             </div>
 
@@ -741,7 +822,8 @@
                 
                 <!-- মন্তব্য + বাদ পড়া দিনের তালিকা (এডভান্সড ফিচার) -->
                 <div>
-                    <strong>🗓️ মন্তব্য:</strong> <span id="infoNote">শুক্র-শনিবার সাপ্তাহিক ছুটি + সরকারি ছুটি বাদ দেওয়া হবে।</span>
+                    <strong>🗓️ মন্তব্য:</strong>
+                    <span id="infoNote">হিসাবের অপেক্ষায়...</span>
                 </div>
                 
                 <div id="excludedListContainer" style="margin-top: 1.5rem;">
@@ -762,84 +844,162 @@
 <script>
     // ---------- Predefined Bangladesh Govt Holidays (month-day) ----------
     const fixedHolidays = [
-        { mmdd: "02-21", name: "শহীদ দিবস ও আন্তর্জাতিক মাতৃভাষা দিবস" },
+        { mmdd: "02-21", name: "আন্তর্জাতিক মাতৃভাষা দিবস" },
         { mmdd: "03-26", name: "স্বাধীনতা ও জাতীয় দিবস" },
-        { mmdd: "04-14", name: "বাংলা নববর্ষ (পহেলা বৈশাখ)" },
-        { mmdd: "05-01", name: "মে দিবস (মে ডে)" },
-        { mmdd: "08-15", name: "জাতীয় শোক দিবস" },
-        { mmdd: "12-16", name: "বিজয় দিবস" }
+        { mmdd: "04-14", name: "বাংলা নববর্ষ" },
+        { mmdd: "05-01", name: "মে দিবস" },
+        { mmdd: "12-16", name: "বিজয় দিবস" },
+        { mmdd: "12-25", name: "বড়দিন" }
     ];
 
     // ---------- Yearly Religious Holidays (Bangladesh Govt Calendar) ----------
     const religiousHolidays = {
+        "2025": [
+            { mmdd: "02-15", name: "শবে বরাত" },
+            { mmdd: "03-28", name: "শবে কদর ও জুমাতুল বিদা" },
+            { mmdd: "03-29", name: "ঈদুল ফিতর (১ম দিন)" },
+            { mmdd: "03-30", name: "ঈদুল ফিতর (২য় দিন)" },
+            { mmdd: "03-31", name: "ঈদুল ফিতর (৩য় দিন)" },
+            { mmdd: "04-01", name: "ঈদুল ফিতর (৪র্থ দিন)" },
+            { mmdd: "04-02", name: "ঈদুল ফিতর (৫ম দিন)" },
+            { mmdd: "05-11", name: "বুদ্ধ পূর্ণিমা" },
+            { mmdd: "06-05", name: "ঈদুল আজহা (১ম দিন)" },
+            { mmdd: "06-06", name: "ঈদুল আজহা (২য় দিন)" },
+            { mmdd: "06-07", name: "ঈদুল আজহা (৩য় দিন)" },
+            { mmdd: "06-08", name: "ঈদুল আজহা (৪র্থ দিন)" },
+            { mmdd: "06-09", name: "ঈদুল আজহা (৫ম দিন)" },
+            { mmdd: "06-10", name: "ঈদুল আজহা (৬ষ্ঠ দিন)" },
+            { mmdd: "07-06", name: "আশুরা" },
+            { mmdd: "08-16", name: "শুভ জন্মাষ্টমী" },
+            { mmdd: "09-05", name: "ঈদে মিলাদুন্নবী" },
+            { mmdd: "10-01", name: "দুর্গাপূজা (১ম দিন)" },
+            { mmdd: "10-02", name: "দুর্গাপূজা (বিজয়া দশমী)" },
+            { mmdd: "12-25", name: "বড়দিন" }
+        ],
+
         "2026": [
-            { mmdd: "02-25", name: "শবে বরাত" },
-            { mmdd: "03-20", name: "ঈদুল ফিতর (চাঁদ সাপেক্ষে)" },
-            { mmdd: "03-21", name: "ঈদুল ফিতর (২য় দিন)" },
-            { mmdd: "03-22", name: "ঈদুল ফিতর (৩য় দিন)" },
-            { mmdd: "05-01", name: "বুদ্ধ পূর্ণিমা (ঐতিহাসিক ও ধর্মীয়)" },
-            { mmdd: "05-27", name: "ঈদুল আজহা (চাঁদ সাপেক্ষে)" },
+            { mmdd: "02-04", name: "শবে বরাত" },
+            { mmdd: "03-17", name: "শবে কদর" },
+            { mmdd: "03-20", name: "জুমাতুল বিদা" },
+            { mmdd: "03-19", name: "ঈদুল ফিতর (১ম দিন)" },
+            { mmdd: "03-20", name: "ঈদুল ফিতর (২য় দিন)" },
+            { mmdd: "03-21", name: "ঈদুল ফিতর (৩য় দিন)" },
+            { mmdd: "03-22", name: "ঈদুল ফিতর (৪র্থ দিন)" },
+            { mmdd: "03-23", name: "ঈদুল ফিতর (৫ম দিন)" },
+            { mmdd: "05-01", name: "বুদ্ধ পূর্ণিমা" },
+            { mmdd: "05-27", name: "ঈদুল আজহা (১ম দিন)" },
             { mmdd: "05-28", name: "ঈদুল আজহা (২য় দিন)" },
             { mmdd: "05-29", name: "ঈদুল আজহা (৩য় দিন)" },
-            { mmdd: "07-26", name: "আশুরা" },
+            { mmdd: "05-30", name: "ঈদুল আজহা (৪র্থ দিন)" },
+            { mmdd: "05-31", name: "ঈদুল আজহা (৫ম দিন)" },
+            { mmdd: "08-26", name: "ঈদে মিলাদুন্নবী" },
             { mmdd: "09-04", name: "শুভ জন্মাষ্টমী" },
-            { mmdd: "10-20", name: "দুর্গাপূজা (বিজয়ী দশমী)" },
-            { mmdd: "12-25", name: "যীশু খ্রীষ্টের জন্মদিন (বড়দিন)" }
+            { mmdd: "10-20", name: "দুর্গাপূজা (১ম দিন)" },
+            { mmdd: "10-21", name: "দুর্গাপূজা (বিজয়া দশমী)" },
+            { mmdd: "12-25", name: "বড়দিন" }
         ],
+        // ⚠️ ২০২৭–২০৩০ সালের ছুটির তারিখসমূহ সম্ভাব্য (Predicted)।
+        // সরকারিভাবে গেজেট প্রকাশিত হলে এই তারিখগুলো আপডেট করতে হবে।
         "2027": [
-            { mmdd: "02-14", name: "শবে বরাত" },
-            { mmdd: "03-09", name: "ঈদুল ফিতর (চাঁদ সাপেক্ষে)" },
-            { mmdd: "03-10", name: "ঈদুল ফিতর (২য় দিন)" },
-            { mmdd: "03-11", name: "ঈদুল ফিতর (৩য় দিন)" },
-            { mmdd: "05-17", name: "ঈদুল আজহা (চাঁদ সাপেক্ষে)" },
-            { mmdd: "05-18", name: "ঈদুল আজহা (২য় দিন)" },
-            { mmdd: "05-19", name: "ঈদুল আজহা (৩য় দিন)" },
-            { mmdd: "05-21", name: "বুদ্ধ পূর্ণিমা" },
-            { mmdd: "07-16", name: "আশুরা" },
-            { mmdd: "08-25", name: "শুভ জন্মাষ্টমী" },
-            { mmdd: "10-09", name: "দুর্গাপূজা (বিজয়ী দশমী)" },
-            { mmdd: "12-25", name: "যীশু খ্রীষ্টের জন্মদিন (বড়দিন)" }
+            { mmdd: "01-24", name: "শবে বরাত (সম্ভাব্য)" },
+            { mmdd: "03-09", name: "শবে কদর (সম্ভাব্য)" },
+            { mmdd: "03-12", name: "জুমাতুল বিদা (সম্ভাব্য)" },
+
+            { mmdd: "03-10", name: "ঈদুল ফিতর (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "03-11", name: "ঈদুল ফিতর (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "03-12", name: "ঈদুল ফিতর (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "03-13", name: "ঈদুল ফিতর (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "03-14", name: "ঈদুল ফিতর (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "04-20", name: "বুদ্ধ পূর্ণিমা (সম্ভাব্য)" },
+
+            { mmdd: "05-16", name: "ঈদুল আজহা (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "05-17", name: "ঈদুল আজহা (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "05-18", name: "ঈদুল আজহা (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "05-19", name: "ঈদুল আজহা (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "05-20", name: "ঈদুল আজহা (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "06-15", name: "আশুরা (সম্ভাব্য)" },
+            { mmdd: "08-24", name: "শুভ জন্মাষ্টমী (সম্ভাব্য)" },
+            { mmdd: "08-15", name: "ঈদে মিলাদুন্নবী (সম্ভাব্য)" },
+            { mmdd: "10-08", name: "দুর্গাপূজা (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "10-09", name: "দুর্গাপূজা (বিজয়া দশমী) (সম্ভাব্য)" },
+            { mmdd: "12-25", name: "বড়দিন" }
         ],
+
         "2028": [
-            { mmdd: "02-03", name: "শবে বরাত" },
-            { mmdd: "02-26", name: "ঈদুল ফিতর (চাঁদ সাপেক্ষে)" },
-            { mmdd: "02-27", name: "ঈদুল ফিতর (২য় দিন)" },
-            { mmdd: "02-28", name: "ঈদুল ফিতর (৩য় দিন)" },
-            { mmdd: "05-05", name: "ঈদুল আজহা (চাঁদ সাপেক্ষে)" },
-            { mmdd: "05-06", name: "ঈদুল আজহা (২য় দিন)" },
-            { mmdd: "05-07", name: "ঈদুল আজহা (৩য় দিন)" },
-            { mmdd: "05-09", name: "বুদ্ধ পূর্ণিমা" },
-            { mmdd: "07-04", name: "আশুরা" },
-            { mmdd: "08-14", name: "শুভ জন্মাষ্টমী" },
-            { mmdd: "09-29", name: "দুর্গাপূজা (বিজয়ী দশমী)" },
-            { mmdd: "12-25", name: "যীশু খ্রীষ্টের জন্মদিন (বড়দিন)" }
+            { mmdd: "01-13", name: "শবে বরাত (সম্ভাব্য)" },
+            { mmdd: "02-26", name: "শবে কদর (সম্ভাব্য)" },
+
+            { mmdd: "02-27", name: "ঈদুল ফিতর (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "02-28", name: "ঈদুল ফিতর (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "02-29", name: "ঈদুল ফিতর (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "03-01", name: "ঈদুল ফিতর (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "03-02", name: "ঈদুল ফিতর (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "05-05", name: "বুদ্ধ পূর্ণিমা (সম্ভাব্য)" },
+
+            { mmdd: "05-05", name: "ঈদুল আজহা (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "05-06", name: "ঈদুল আজহা (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "05-07", name: "ঈদুল আজহা (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "05-08", name: "ঈদুল আজহা (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "05-09", name: "ঈদুল আজহা (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "07-04", name: "আশুরা (সম্ভাব্য)" },
+            { mmdd: "08-14", name: "শুভ জন্মাষ্টমী (সম্ভাব্য)" },
+            { mmdd: "08-03", name: "ঈদে মিলাদুন্নবী (সম্ভাব্য)" },
+            { mmdd: "09-29", name: "দুর্গাপূজা (বিজয়া দশমী) (সম্ভাব্য)" },
+            { mmdd: "12-25", name: "বড়দিন" }
         ],
+
         "2029": [
-            { mmdd: "02-15", name: "ঈদুল ফিতর (চাঁদ সাপেক্ষে)" },
-            { mmdd: "02-16", name: "ঈদুল ফিতর (২য় দিন)" },
-            { mmdd: "02-17", name: "ঈদুল ফিতর (৩য় দিন)" },
-            { mmdd: "04-24", name: "ঈদুল আজহা (চাঁদ সাপেক্ষে)" },
-            { mmdd: "04-25", name: "ঈদুল আজহা (২য় দিন)" },
-            { mmdd: "04-26", name: "ঈদুল আজহা (৩য় দিন)" },
-            { mmdd: "05-27", name: "বুদ্ধ পূর্ণিমা" },
-            { mmdd: "06-23", name: "আশুরা" },
-            { mmdd: "09-02", name: "শুভ জন্মাষ্টমী" },
-            { mmdd: "10-17", name: "দুর্গাপূজা (বিজয়ী দশমী)" },
-            { mmdd: "12-25", name: "যীশু খ্রীষ্টের জন্মদিন (বড়দিন)" }
+            { mmdd: "01-01", name: "শবে বরাত (সম্ভাব্য)" },
+            { mmdd: "02-14", name: "শবে কদর (সম্ভাব্য)" },
+
+            { mmdd: "02-15", name: "ঈদুল ফিতর (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "02-16", name: "ঈদুল ফিতর (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "02-17", name: "ঈদুল ফিতর (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "02-18", name: "ঈদুল ফিতর (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "02-19", name: "ঈদুল ফিতর (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "05-23", name: "বুদ্ধ পূর্ণিমা (সম্ভাব্য)" },
+
+            { mmdd: "04-24", name: "ঈদুল আজহা (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "04-25", name: "ঈদুল আজহা (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "04-26", name: "ঈদুল আজহা (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "04-27", name: "ঈদুল আজহা (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "04-28", name: "ঈদুল আজহা (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "06-23", name: "আশুরা (সম্ভাব্য)" },
+            { mmdd: "09-02", name: "শুভ জন্মাষ্টমী (সম্ভাব্য)" },
+            { mmdd: "07-23", name: "ঈদে মিলাদুন্নবী (সম্ভাব্য)" },
+            { mmdd: "10-17", name: "দুর্গাপূজা (বিজয়া দশমী) (সম্ভাব্য)" },
+            { mmdd: "12-25", name: "বড়দিন" }
         ],
+
         "2030": [
-            { mmdd: "02-04", name: "ঈদুল ফিতর (চাঁদ সাপেক্ষে)" },
-            { mmdd: "02-05", name: "ঈদুল ফিতর (২য় দিন)" },
-            { mmdd: "02-06", name: "ঈদুল ফিতর (৩য় দিন)" },
-            { mmdd: "04-14", name: "ঈদুল আজহা (চাঁদ সাপেক্ষে)" },
-            { mmdd: "04-15", name: "ঈদুল আজহা (২য় দিন)" },
-            { mmdd: "04-16", name: "ঈদুল আজহা (৩য় দিন)" },
-            { mmdd: "05-16", name: "বুদ্ধ পূর্ণিমা" },
-            { mmdd: "06-12", name: "আশুরা" },
-            { mmdd: "08-21", name: "শুভ জন্মাষ্টমী" },
-            { mmdd: "10-07", name: "দুর্গাপূজা (বিজয়ী দশমী)" },
-            { mmdd: "12-25", name: "যীশু খ্রীষ্টের জন্মদিন (বড়দিন)" }
-        ]
+            { mmdd: "01-21", name: "শবে কদর (সম্ভাব্য)" },
+
+            { mmdd: "02-04", name: "ঈদুল ফিতর (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "02-05", name: "ঈদুল ফিতর (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "02-06", name: "ঈদুল ফিতর (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "02-07", name: "ঈদুল ফিতর (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "02-08", name: "ঈদুল ফিতর (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "05-12", name: "বুদ্ধ পূর্ণিমা (সম্ভাব্য)" },
+
+            { mmdd: "04-14", name: "ঈদুল আজহা (১ম দিন) (সম্ভাব্য)" },
+            { mmdd: "04-15", name: "ঈদুল আজহা (২য় দিন) (সম্ভাব্য)" },
+            { mmdd: "04-16", name: "ঈদুল আজহা (৩য় দিন) (সম্ভাব্য)" },
+            { mmdd: "04-17", name: "ঈদুল আজহা (৪র্থ দিন) (সম্ভাব্য)" },
+            { mmdd: "04-18", name: "ঈদুল আজহা (৫ম দিন) (সম্ভাব্য)" },
+
+            { mmdd: "06-12", name: "আশুরা (সম্ভাব্য)" },
+            { mmdd: "08-21", name: "শুভ জন্মাষ্টমী (সম্ভাব্য)" },
+            { mmdd: "07-12", name: "ঈদে মিলাদুন্নবী (সম্ভাব্য)" },
+            { mmdd: "10-07", name: "দুর্গাপূজা (বিজয়া দশমী) (সম্ভাব্য)" },
+            { mmdd: "12-25", name: "বড়দিন" }
+        ],
     };
     let userCustomHolidays = [];  // { date: "YYYY-MM-DD", reason: "..." }
 
@@ -962,7 +1122,7 @@
         
         // ৩. ইউজারের নিজস্ব কাস্টম ছুটি চেক করা
         for (let ch of userCustomHolidays) {
-            let d = new Date(ch.date);
+            let d = parseDate(ch.date); // 👈 এখানে parseDate ব্যবহার করা হলো
             if (d >= startDate && d <= endDate) {
                 let dateStr = ch.date;
                 let existingHoliday = result.find(r => r.date === dateStr);
@@ -1013,8 +1173,31 @@
         let includeEnd = document.getElementById('includeEnd').checked;
 
         // 👇 পরিবর্তিত কোড (শুধু শুরুর তারিখ চেক করবে)
-        if (!startInput) {
-            alert("দয়া করে শুরুর তারিখ নির্বাচন করুন।");
+        if (!startInput || !endInput) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'তারিখ নির্বাচন করুন',
+                titleColor: '#000000' ,
+                html: `
+                    <div style="
+                        font-size:16px;
+                        color:#f1f1f1;
+                        font-weight:500;
+                        line-height:1.7;
+                    ">
+                        📅 <b>দয়া করে শুরুর এবং শেষের তারিখ সঠিকভাবে নির্বাচন করুন।</b>
+                    </div>
+                `,
+                color: '#ffffff',        
+                confirmButtonText: '✔ ঠিক আছে',
+                background: 'rgba(255,255,255,0.12)',
+                color:"#f8fafc",
+                confirmButtonColor: '#2563eb',
+                backdrop: `rgba(15,23,42,.35)`,
+                showClass: { popup: 'animate__animated animate__zoomIn' },
+                hideClass: { popup: 'animate__animated animate__zoomOut' },
+                customClass: { popup: 'glass-popup', confirmButton: 'glass-btn' }
+            });
             return;
         }
         let start = parseDate(startInput);
@@ -1075,8 +1258,56 @@
         document.getElementById('totalDaysSpan').innerText = totalDays;
         document.getElementById('workingDaysSpan').innerText = workingDays;
         document.getElementById('excludedSpan').innerText = excludedEntries.length;
-        document.getElementById('infoNote').innerHTML = `শুক্র-শনিবার + সরকারি ছুটি মিলিয়ে মোট ${excludedEntries.length} দিন বাদ পড়েছে।`;
+        const TARGET_WORKING_DAYS = 28;
+        const remaining = TARGET_WORKING_DAYS - workingDays;
 
+        // ২৮ তম কার্যদিবস ঠিক কবে হবে/হয়েছিল তা বের করার লজিক
+        let targetDateObj = new Date(start);
+        let tempWorkingDays = 0;
+        
+        // ২৮ কার্যদিবস পার হতে ক্যালেন্ডারে সর্বোচ্চ ৬০-৬৫ দিনের মতো লাগতে পারে, তাই সেই রেঞ্জের ছুটিগুলো অগ্রিম নিয়ে নিচ্ছি
+        let maxExpectedEnd = new Date(start);
+        maxExpectedEnd.setDate(maxExpectedEnd.getDate() + 65); 
+        
+        let extHolidays = getAllHolidaysInRange(start, maxExpectedEnd);
+        let extHolidaysMap = new Map();
+        extHolidays.forEach(h => extHolidaysMap.set(h.date, h.reason));
+
+        // startDate থেকে গুনে গুনে ২৮ তম কার্যদিবসে পৌঁছানো
+        while (tempWorkingDays < TARGET_WORKING_DAYS) {
+            let dStr = formatDateYMD(targetDateObj);
+            let isW = isWeekend(targetDateObj);
+            let isH = extHolidaysMap.has(dStr);
+            
+            if (!isW && !isH) {
+                tempWorkingDays++;
+            }
+            
+            // ২৮ দিনে পৌঁছে গেলে আর তারিখ বাড়ানোর দরকার নেই
+            if (tempWorkingDays < TARGET_WORKING_DAYS) {
+                targetDateObj.setDate(targetDateObj.getDate() + 1);
+            }
+        }
+
+        // তারিখ এবং বারের নাম ফরম্যাট করা
+        let targetDateStr = formatDateDMY(targetDateObj);
+        let targetDayName = getWeekdayName(targetDateObj);
+
+        let note = "";
+
+        // UI তে আপনার চাওয়া অনুযায়ী মেসেজ সেট করা
+        if (remaining > 0) {
+            note = `🟡 নির্ধারিত ২৮ কার্যদিবস পূর্ণ হতে আরও <strong>${remaining}</strong> কার্যদিবস বাকি রয়েছে।<br><span style="font-size: 0.95em; color: var(--text-soft); display: inline-block; margin-top: 5px;">🎯 সম্ভাব্য শেষ তারিখ: <strong>${targetDateStr} (${targetDayName})</strong></span>`;
+        }
+        else if (remaining === 0) {
+            note = `🟢 আজ নির্ধারিত <strong>২৮ কার্যদিবস</strong> পূর্ণ হয়েছে।<br><span style="font-size: 0.95em; color: var(--text-soft); display: inline-block; margin-top: 5px;">পূর্ণতার তারিখ: <strong>${targetDateStr} (${targetDayName})</strong></span>`;
+        }
+        else {
+            note = `🔴 নির্ধারিত ২৮ কার্যদিবস অতিক্রম করে <strong>${Math.abs(remaining)}</strong> কার্যদিবস অতিবাহিত হয়েছে।<br><span style="font-size: 0.95em; color: var(--text-soft); display: inline-block; margin-top: 5px;">২৮ কার্যদিবস পূর্ণ হয়েছিল: <strong>${targetDateStr} (${targetDayName})</strong></span>`;
+        }
+
+
+        document.getElementById("infoNote").innerHTML = note;
         // Render excluded list inside right panel
         const excludedContainer = document.getElementById('excludedList');
         if (excludedEntries.length === 0) {
@@ -1159,17 +1390,6 @@
         }
         
     });
-
-    // Side Bar----------------------------------------------------------------------------------------------------------
-
-
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('show');
-    }
 </script>
 </body>
 </html>
