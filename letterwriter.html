@@ -629,6 +629,36 @@
             -webkit-text-fill-color: initial !important;
             display: inline-block;
         }
+        /* ২. একটি নতুন ফন্ট ফ্যামিলি তৈরি করা হলো যা শুধু বাংলা সংখ্যা ধারণ করবে */
+        @font-face {
+            font-family: 'StandardBengaliDigits';
+            /* কম্পিউটারের ডিফল্ট সোজা ও সুন্দর ফন্টগুলো আগে ট্রাই করবে, না থাকলে গুগল ফন্ট নিবে */
+            src: local('SolaimanLipi'), local('Kalpurush'), local('Siyam Rupali'), url('https://fonts.gstatic.com/s/notosansbengali/v15/0Fl3VHe9939O2w3A_S2X-TlsN-NreB8A.woff2') format('woff2');
+            unicode-range: U+09E6-09EF; /* শুধু বাংলা ০-৯ সংখ্যার ইউনিকোড রেঞ্জ */
+        }
+
+        /* ৩. আপনার উল্লেখ করা সুনির্দিষ্ট এলিমেন্টগুলোর জন্য ফন্ট অ্যাসাইন */
+        input, 
+        select, 
+        .result-value, 
+        .result-sub, 
+        .conversion-table, 
+        .edu-grid, 
+        p, 
+        td, 
+        h4 {
+            /* প্রথমে সংখ্যার জন্য তৈরি করা ফন্ট বসবে, তারপর স্বাভাবিক লেখার জন্য Hind Siliguri বসবে */
+            font-family: 'StandardBengaliDigits', 'Hind Siliguri', sans-serif !important;
+        }
+
+        /* ৪. ইনপুট বক্সের প্লেসহোল্ডার (যেমন: ১.৫) এর জন্য আলাদা স্পেশাল ফিক্স */
+        input::placeholder {
+            font-family: 'StandardBengaliDigits', 'Hind Siliguri', sans-serif !important;
+        }
+        select::placeholder {
+            font-family: 'StandardBengaliDigits', 'Hind Siliguri', sans-serif !important;
+        }
+
     </style>
 </head>
 <body>
@@ -660,9 +690,9 @@
         <a href="faraiz.html" class="nav-item"><span>⚖️</span> উত্তরাধিকার ক্যালকুলেটর</a>
         <a href="obhijog.html" class="nav-item"><span>📝</span> অভিযোগ সেকশন</a>
         <a href="ticket.html" class="nav-item"><span>📩</span> টিকেট সেকশন</a>
-        <a href="letterwriter.html" class="nav-item active"> <span>📞</span> লেটার রাইটার নাম্বার
-        </a>
+        <a href="letterwriter.html" class="nav-item active"> <span>📞</span> লেটার রাইটার নাম্বার </a>
         <a href="workingday.html" class="nav-item"><span>📅</span> কার্যদিবস ক্যালকুলেটর</a>
+        <a href="land-unit-converter.html" class="nav-item"><span>📐</span> জমির পরিমাপ রূপান্তর</a>
     </nav>
 </aside>
 <div id="overlay" onclick="toggleSidebar()"></div>
