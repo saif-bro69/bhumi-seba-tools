@@ -470,13 +470,25 @@
             right: 15px;
             background: #10b981;
             color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 30px;
             font-size: 0.85rem;
             opacity: 0;
             transition: opacity 0.3s;
         }
         .copied-tooltip.show { opacity: 1; }
+        /* নিচের দিকে পয়েন্ট করা তীর চিহ্নের জন্য কোড */
+        .copied-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;           /* টুলটিপ বক্সের একদম নিচে */
+            left: 50%;           /* বক্সের মাঝ বরাবর */
+            transform: translateX(-50%); /* একদম সেন্টারে আনার জন্য */
+            border-width: 8px;   /* তীরের আকার */
+            border-style: solid;
+            /* শুধুমাত্র ওপরের বর্ডারটি সবুজ হবে, বাকিগুলো স্বচ্ছ */
+            border-color: #10b981 transparent transparent transparent; 
+        }
 
 
         /* ড্রপডাউন অপশনগুলোকে সবসময় নিচের দিকে ওপেন হতে বাধ্য করার কোড */
@@ -603,6 +615,36 @@
              .remove-btn { align-self: flex-end; }
         }
 
+        /* ২. একটি নতুন ফন্ট ফ্যামিলি তৈরি করা হলো যা শুধু বাংলা সংখ্যা ধারণ করবে */
+        @font-face {
+            font-family: 'StandardBengaliDigits';
+            /* কম্পিউটারের ডিফল্ট সোজা ও সুন্দর ফন্টগুলো আগে ট্রাই করবে, না থাকলে গুগল ফন্ট নিবে */
+            src: local('SolaimanLipi'), local('Kalpurush'), local('Siyam Rupali'), url('https://fonts.gstatic.com/s/notosansbengali/v15/0Fl3VHe9939O2w3A_S2X-TlsN-NreB8A.woff2') format('woff2');
+            unicode-range: U+09E6-09EF; /* শুধু বাংলা ০-৯ সংখ্যার ইউনিকোড রেঞ্জ */
+        }
+
+        /* ৩. আপনার উল্লেখ করা সুনির্দিষ্ট এলিমেন্টগুলোর জন্য ফন্ট অ্যাসাইন */
+        input, 
+        select, 
+        .result-value, 
+        .result-sub, 
+        .conversion-table, 
+        .edu-grid, 
+        p, 
+        td, 
+        h4 {
+            /* প্রথমে সংখ্যার জন্য তৈরি করা ফন্ট বসবে, তারপর স্বাভাবিক লেখার জন্য Hind Siliguri বসবে */
+            font-family: 'StandardBengaliDigits', 'Hind Siliguri', sans-serif !important;
+        }
+
+        /* ৪. ইনপুট বক্সের প্লেসহোল্ডার (যেমন: ১.৫) এর জন্য আলাদা স্পেশাল ফিক্স */
+        input::placeholder {
+            font-family: 'StandardBengaliDigits', 'Hind Siliguri', sans-serif !important;
+        }
+        select::placeholder {
+            font-family: 'StandardBengaliDigits', 'Hind Siliguri', sans-serif !important;
+        }
+
     </style>
 </head>
 <body>
@@ -640,18 +682,12 @@
             <a href="namjari.html" class="nav-item"> <span>📊</span>গ্রহীতার অংশ হিসাব
             </a>
             
-            <a href="faraiz.html" class="nav-item">
-                <span>⚖️</span> উত্তরাধিকার ক্যালকুলেটর
-            </a>
-
-            <a href="obhijog.html" class="nav-item active"> <span>📝</span> অভিযোগ সেকশন
-            </a>
-            
-            <a href="ticket.html" class="nav-item"> <span>📩</span> টিকেট সেকশন
-            </a>
-            <a href="letterwriter.html" class="nav-item"> <span>📞</span> লেটার রাইটার নাম্বার
-            </a>
+            <a href="faraiz.html" class="nav-item"><span>⚖️</span> উত্তরাধিকার ক্যালকুলেটর</a>
+            <a href="obhijog.html" class="nav-item active"> <span>📝</span> অভিযোগ সেকশন</a>
+            <a href="ticket.html" class="nav-item"> <span>📩</span> টিকেট সেকশন</a>
+            <a href="letterwriter.html" class="nav-item"> <span>📞</span> লেটার রাইটার নাম্বার</a>
             <a href="workingday.html" class="nav-item"><span>📅</span> কার্যদিবস ক্যালকুলেটর</a>
+            <a href="land-unit-converter.html" class="nav-item"><span>📐</span> জমির পরিমাপ রূপান্তর</a>
         </nav>
 
     </aside>
@@ -734,6 +770,7 @@
                     
                     <div class="form-group"><label>মৌজা</label><input type="text" id="lt_mouza" class="form-input" placeholder="মৌজা"></div>
                     <div class="form-group"><label>খতিয়ান নম্বর</label><input type="text" id="lt_khatian" class="form-input" placeholder="খতিয়ান নম্বর"></div>
+                    <div class="form-group"><label>হোল্ডিং নম্বর</label><input type="text" id="lt_holding" class="form-input" placeholder="হোল্ডিং নম্বর"></div>
                     <div class="form-group"><label>ইউনিয়ন ভূমি অফিস</label><input type="text" id="lt_landOffice" class="form-input" placeholder="ভূমি অফিসের নাম"></div>
                     <div class="form-group"><label>নাগরিকের নাম</label><input type="text" id="lt_name" class="form-input" placeholder="নাগরিকের নাম"></div>
                     <div class="form-group"><label>জাতীয় পরিচয় পত্র নম্বর</label><input type="number" id="lt_nid" class="form-input" placeholder="NID নম্বর"></div>
@@ -831,6 +868,27 @@
             }
         }
 
+        // 📌 ইনপুট ফিল্ডে ক্লিক বা টাইপ করলে রেড বর্ডার মুছে যাবে
+        document.addEventListener("DOMContentLoaded", function() {
+            // সব ইনপুট ও সিলেক্ট এলিমেন্ট নির্বাচন করুন
+            const allInputs = document.querySelectorAll('.form-input');
+            
+            allInputs.forEach(function(el) {
+                // focus event: ফিল্ডে ক্লিক করলে বর্ডার রিসেট
+                el.addEventListener('focus', function() {
+                    this.style.borderColor = ''; // রেড বর্ডার সরান
+                });
+                
+                // input/change event: টাইপ করলে বা সিলেক্ট করলেও বর্ডার রিসেট
+                el.addEventListener('input', function() {
+                    this.style.borderColor = '';
+                });
+                el.addEventListener('change', function() {
+                    this.style.borderColor = '';
+                });
+            });
+        });
+
         // Tab Switching Logic
         function switchTab(tabId, btnElement) {
             // Remove active classes
@@ -845,16 +903,36 @@
             document.getElementById('form-' + tabId).classList.add('active');
         }
 
-        // Helper function to get val safely
         const getVal = (id) => {
-            const value = document.getElementById(id).value || '[তথ্য প্রদান করা হয়নি]';
-
-            // শুধু সংখ্যা থাকলে বাংলা করবে
-            if (/^[0-9]+$/.test(value)) {
-                return toBanglaNumber(value);
+            const element = document.getElementById(id);
+            let defaultValue = '[তথ্য প্রদান করা হয়নি]';
+            
+            if (!element) return defaultValue;
+            
+            // সিলেক্ট বক্স চেক
+            if (element.tagName === 'SELECT') {
+                if (element.selectedIndex > 0) {
+                    element.style.borderColor = ''; // সঠিক হলে বর্ডার স্বাভাবিক
+                    return element.options[element.selectedIndex].text;
+                } else {
+                    element.style.borderColor = '#ef4444'; // খালি থাকলে রেড
+                    return defaultValue;
+                }
             }
-
-            return value;
+            
+            // ইনপুট ফিল্ড চেক
+            let val = element.value.trim();
+            if (val === '') {
+                element.style.borderColor = '#ef4444'; // খালি থাকলে রেড
+                return defaultValue;
+            } else {
+                element.style.borderColor = ''; // পূর্ণ থাকলে বর্ডার রিসেট
+                // শুধু সংখ্যা থাকলে বাংলা কনভার্ট
+                if (/^[0-9]+$/.test(val)) {
+                    return toBanglaNumber(val);
+                }
+                return val;
+            }
         };
         // Helper function to format date (YYYY-MM-DD to DD-MM-YYYY)
         const formatDate = (dateStr) => {
@@ -867,6 +945,8 @@
 
         // Generation Logic
         function generateComplaint(category) {
+            // 🟢 সকল ইনপুটের বর্ডার আগে থেকে রিসেট করুন
+            document.querySelectorAll('.form-input').forEach(el => el.style.borderColor = '');
             let outputText = "";
 
             if (category === 'recordRoom') {
@@ -875,16 +955,16 @@
                 const upazila = getGeoVal('rr_upazila');
 
                 outputText = `নাগরিক ${getVal('rr_type')} খতিয়ানের সার্টিফাইড কপির জন্য অনলাইনে আবেদন করেছিলেন।
-আবেদনের তারিখঃ ${formatDate(getVal('rr_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('rr_deliveryDate'))}। নির্ধারিত সময় অতিক্রম হয়ে গিয়েছে কিন্তু নাগরিক খতিয়ান ডেলিভারি পান নি। আবেদন নম্বরঃ ${getVal('rr_appNo')}। আবেদন নম্বর ট্র্যাকিং করে দেখা গিয়েছে, আবেদনটি গ্রহণ করা হয়েছে। জেলা প্রশাসকের কার্যালয়, ${getVal('rr_dcOffice')}। খতিয়ান ডেলিভারির মাধ্যমঃ ${getVal('rr_deliveryType')}। নাগরিকের নামঃ ${getVal('rr_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('rr_nid')}। জন্ম তারিখঃ ${formatDate(getVal('rr_dob'))}। এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('rr_mobile')}।
+আবেদনের তারিখঃ ${formatDate(getVal('rr_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('rr_deliveryDate'))}। নির্ধারিত সময় অতিক্রম হয়ে গিয়েছে কিন্তু নাগরিক খতিয়ান ডেলিভারি পান নি। আবেদন নম্বরঃ ${getVal('rr_appNo')}। আবেদন নম্বর ট্র্যাকিং করে দেখা গিয়েছে, আবেদনটি গ্রহণ করা হয়েছে। জেলা প্রশাসকের কার্যালয়, ${getVal('rr_dcOffice')}। খতিয়ান ডেলিভারির মাধ্যমঃ ${getVal('rr_deliveryType')}। নাগরিকের নামঃ ${getVal('rr_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('rr_nid')}। জন্ম তারিখঃ ${formatDate(getVal('rr_dob'))}। এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('rr_mobile')}।
 খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('rr_mouza')} , জে.এল নম্বরঃ ${getVal('rr_jl')} , খতিয়ান নম্বরঃ ${getVal('rr_khatian')}।
-নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে জেলা প্রশাসক মহোদয়ের দৃষ্টি আকর্ষণ করেছেন।`;
+নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে জেলা প্রশাসক মহোদয়ের দৃষ্টি আকর্ষণ করেছেন।`;
             } else if (category === 'landTax') {
                 const bibhag = getGeoVal('lt_division');
                 const jela = getGeoVal('lt_district');
                 const upazila = getGeoVal('lt_upazila');
 
-                outputText = `নাগরিক গত ${formatDate(getVal('lt_attachDate'))} তারিখে ভূমি উন্নয়ন কর পরিশোধ করার জন্য নিবন্ধিত প্রোফাইলে ১টি খতিয়ানের তথ্য সংযুক্ত করেছেন।
-খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('lt_mouza')} , খতিয়ান নম্বর যথাক্রমেঃ ${getVal('lt_khatian')}। এক্ষেত্রে ৪৮ ঘণ্টা সময় অতিক্রম হয়ে যাওয়ার পরেও ${getVal('lt_landOffice')} ইউনিয়ন ভূমি অফিস থেকে নাগরিকের হোল্ডিং এর তথ্যটি অনুমোদন করা হয়নি।
+                outputText = `নাগরিক গত ${formatDate(getVal('lt_attachDate'))} তারিখে ভূমি উন্নয়ন কর পরিশোধ করার জন্য নিবন্ধিত প্রোফাইলে খতিয়ানের তথ্য সংযুক্ত করেছেন।
+খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('lt_mouza')} , খতিয়ান নম্বরঃ ${getVal('lt_khatian')}, হোল্ডিং নম্বরঃ ${getVal('lt_holding')} । এক্ষেত্রে ৪৮ ঘণ্টা সময় অতিক্রম হয়ে যাওয়ার পরেও ${getVal('lt_landOffice')} ইউনিয়ন ভূমি অফিস থেকে নাগরিকের হোল্ডিং এর তথ্যটি অনুমোদন করা হয়নি।
 বর্তমানে খতিয়ানের তথ্যটি অপেক্ষমান হিসেবে রয়েছে। নাগরিকের নাম- ${getVal('lt_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('lt_nid')} , জন্ম তারিখঃ ${formatDate(getVal('lt_dob'))} , এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('lt_mobile')} , পাসওয়ার্ডঃ ${getVal('lt_password')}।
 নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন, দ্রুত প্রতিকার চেয়ে ঊর্ধ্বতন কর্মকর্তাদের দৃষ্টি আকর্ষণ করেছেন।`;
 
@@ -895,12 +975,16 @@
 
                 outputText = `নাগরিক গত ${formatDate(getVal('nj_applyDate'))} তারিখে নামজারির জন্য অনলাইনে আবেদন করেছিলেন। নির্ধারিত ২৮ কার্য দিবস সময় অতিক্রম হয়ে গিয়েছে কিন্তু নামজারি আবেদনের কার্যক্রম সম্পন্ন হয়নি।
 নামজারি আবেদন নম্বরঃ ${getVal('nj_appNo')}। নামজারি মামলা নম্বরঃ ${getVal('nj_caseNo')}। নামজারি আবেদনের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}। আবেদনটির বর্তমান অবস্থাঃ ${getVal('nj_status')}। আবেদনটি বর্তমানে যার নিকট রয়েছে- ${getVal('nj_withWhom')}। সংশ্লিষ্ট অফিসঃ ${getVal('nj_office')}।
-আবেদনকারীর নাম- ${getVal('nj_name')}। আবেদনে ব্যবহৃত জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('nj_nid')}। জন্ম তারিখঃ ${formatDate(getVal('nj_dob'))}। আবেদনে ব্যবহৃত মোবাইল নম্বরঃ ${getVal('nj_mobile')}। পাসওয়ার্ডঃ ${getVal('lt_password')}।
-নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে ঊর্ধ্বতন কর্মকর্তাদের দৃষ্টি আকর্ষণ করেছেন।`;
+আবেদনকারীর নাম- ${getVal('nj_name')}, আবেদনে ব্যবহৃত জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('nj_nid')}, জন্ম তারিখঃ ${formatDate(getVal('nj_dob'))}, আবেদনে ব্যবহৃত মোবাইল নম্বরঃ ${getVal('nj_mobile')}, পাসওয়ার্ডঃ ${getVal('lt_password')}।
+নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে ঊর্ধ্বতন কর্মকর্তাদের দৃষ্টি আকর্ষণ করেছেন।`;
             }
 
             // টেক্সট সেট করা এবং আউটপুট এরিয়া দেখানো
-            document.getElementById('finalText').innerText = outputText;
+            // টেক্সট সেট করা এবং আউটপুট এরিয়া দেখানো
+            let formattedText = outputText.replace(/\[তথ্য প্রদান করা হয়নি\]|\[তথ্য প্রদান করা হয়নি\]/g, 
+                '<span style="color: #ef4444; font-weight: bold;">[তথ্য প্রদান করা হয়নি]</span>'
+            );
+            document.getElementById('finalText').innerHTML = formattedText.replace(/\n/g, '<br>');
             const outputArea = document.getElementById('outputArea');
             outputArea.style.display = 'block';
             
@@ -944,11 +1028,11 @@
 
 
     // বাংলাদেশের সকল বিভাগ, জেলা ও উপজেলার তথ্য ভাণ্ডার
-        const bdGeographicData = {
+         const bdGeographicData = {
             "Dhaka": {
                 name: "ঢাকা",
                 districts: {
-                    "Dhaka": { name: "ঢাকা", upazilas: ["কোতয়ালী রাজস্ব সার্কেল", "রমনা রাজস্ব সার্কেল", "তেজগাঁও রাজস্ব সার্কেল", "গুলশান রাজস্ব সার্কেল", "মিরপুর রাজস্ব সার্কেল", "ক্যান্টনমেন্ট রাজস্ব সার্কেল", "ধানমন্ডি রাজস্ব সার্কেল", "মোহাম্মদপুর রাজস্ব সার্কেল", "লালবাগ রাজস্ব সার্কেল", "ডেমরা রাজস্ব সার্কেল", "মতিঝিল রাজস্ব সার্কেল", "কেরাণীগঞ্জ (দক্ষিণ) রাজস্ব সার্কেল", "আমিনবাজার রাজস্ব সার্কেল", "আশুলিয়া রাজস্ব সার্কেল", "ধামরাই", "দোহার", "কেরানীগঞ্জ", "নবাবগঞ্জ", "সাভার"] },
+                    "Dhaka": { name: "ঢাকা", upazilas: ["কোতয়ালী রাজস্ব সার্কেল",  "রমনা রাজস্ব সার্কেল", "তেজগাঁও রাজস্ব সার্কেল", "গুলশান রাজস্ব সার্কেল", "মিরপুর রাজস্ব সার্কেল", "ক্যান্টনমেন্ট রাজস্ব সার্কেল", "ধানমন্ডি রাজস্ব সার্কেল", "মোহাম্মদপুর রাজস্ব সার্কেল", "লালবাগ রাজস্ব সার্কেল", "ডেমরা রাজস্ব সার্কেল", "মতিঝিল রাজস্ব সার্কেল", "কেরাণীগঞ্জ (দক্ষিণ) রাজস্ব সার্কেল", "আমিনবাজার রাজস্ব সার্কেল", "আশুলিয়া রাজস্ব সার্কেল", "ধামরাই", "দোহার", "কেরানীগঞ্জ", "নবাবগঞ্জ", "সাভার"] },
                     "Tangail": { name: "টাঙ্গাইল", upazilas: ["টাঙ্গাইল সদর", "কালিহাতী", "ঘাটাইল", "মির্জাপুর", "মধুপুর", "সখীপুর", "গোপালপুর", "নাগরপুর", "ভূঞাপুর", "দেলদুয়ার", "ধনবাড়ী", "বাসাইল"] },
                     "Gazipur": { name: "গাজীপুর", upazilas: ["টঙ্গী রাজস্ব সার্কেল", "গাজীপুর সদর", "কালিয়াকৈর", "কালীগঞ্জ", "কাপাসিয়া", "শ্রীপুর"] },
                     "Narayanganj": { name: "নারায়ণগঞ্জ", upazilas: ["নারায়ণগঞ্জ সদর", "পুর্বাচল রাজস্ব সার্কেল ", "ফতুল্লা রাজস্ব সার্কেল", "সিদ্ধিরগঞ্জ রাজস্ব সার্কেল", "কাঁচপুর রাজস্ব সার্কেল", "আড়াইহাজার", "বন্দর", "রূপগঞ্জ", "সোনারগাঁও"] },
@@ -966,7 +1050,7 @@
             "Chattogram": {
                 name: "চট্টগ্রাম",
                 districts: {
-                    "Chattogram": { name: "চট্টগ্রাম", upazilas: ["আনোয়ারা", "বাঁশখালী", "বোয়ালখালী", "চন্দনাইশ", "ফটিকছড়ি", "হাটহাজারী", "লোহাগাড়া", "মীরসরাই", "পটিয়া", "রাঙ্গুনিয়া", "রাউজান", "সন্দ্বীপ", "সাতকানিয়া", "সীতাকুণ্ড", "কর্ণফুলী", "কোতোয়ালী", "বাকলিয়া", "চকবাজার", "চান্দগাঁও", "পাঁচলাইশ", "বায়েজিদ বোস্তামী", "খুলশী", "ডবলমুরিং", "সদরঘাট", "হালিশহর", "পাহাড়তলী", "আকবর শাহ", "পতেঙ্গা", "ইপিজেড", "বন্দর", "ভূজপুর", "জোরারগঞ্জ"] },
+                    "Chattogram": { name: "চট্টগ্রাম", upazilas: ["চট্টগ্রাম সদর রাজস্ব সার্কেল", "কাট্টলী রাজস্ব সার্কেল", "আগ্রাবাদ রাজস্ব সার্কেল", "পতেঙ্গা রাজস্ব সার্কেল ", "চান্দগাঁও  রাজস্ব সার্কেল", "বাকলিয়া রাজস্ব সার্কেল", "আনোয়ারা", "বাঁশখালী", "বোয়ালখালী", "চন্দনাইশ", "ফটিকছড়ি", "হাটহাজারী", "লোহাগাড়া", "মীরসরাই", "পটিয়া", "রাঙ্গুনিয়া", "রাউজান", "সন্দ্বীপ", "সাতকানিয়া", "সীতাকুণ্ড", "কর্ণফুলী"] },
                     "Cumilla": { name: "কুমিল্লা", upazilas: ["কুমিল্লা সদর", "বরুড়া", "চান্দিনা", "দাউদকান্দি", "দেবিদ্বার", "হোমনা", "লাকসাম", "মুরাদনগর", "নাঙ্গলকোট", "চৌদ্দগ্রাম", "তিতাস", "মেঘনা", "মনোহরগঞ্জ", "বুড়িচং", "ব্রাহ্মণপাড়া", "কুমিল্লা সদর দক্ষিণ", "লালমাই"] },
                     "CoxsBazar": { name: "কক্সবাজার", upazilas: ["কক্সবাজার সদর", "চকোরিয়া", "উখিয়া", "টেকনাফ", "রামু", "মহেশখালী", "কুতুবদিয়া", "পেকুয়া", "ঈদগাঁও"] },
                     "Feni": { name: "ফেনী", upazilas: ["ফেনী সদর", "দাগনভূঁঞা", "ছাগলনাইয়া", "পরশুরাম", "সোনাগাজী", "ফুলগাজী"] },
@@ -982,7 +1066,7 @@
             "Rajshahi": {
                 name: "রাজশাহী",
                 districts: {
-                    "Rajshahi": { name: "রাজশাহী", upazilas: ["রাজশাহী সদর/বোয়ালিয়া", "রাজপাড়া", "চন্দ্রিমা", "মতিহার", "কাশিয়াডাঙ্গা", "শাহমখদুম", "এয়ারপোর্ট", "পবা", "বেলপুকুর", "কাটাখালী", "কর্ণহার", "দামকুড়া", "পবা উপজেলা", "বাঘা", "চারঘাট", "পুঠিয়া", "দুর্গাপুর", "বাগমারা", "মোহনপুর", "তানোর", "গোদাগাড়ী"] },
+                    "Rajshahi": { name: "রাজশাহী", upazilas: ["রাজশাহী বোয়ালিয়া রাজস্ব সার্কেল", "বাঘা", "বাগমারা", "চারঘাট", "দুর্গাপুর","গোদাগাড়ী", "মোহনপুর", "পবা", "পুঠিয়া", "তানোর" ] },
                     "Bogra": { name: "বগুড়া", upazilas: ["বগুড়া সদর", "আদমদীঘি", "শাজাহানপুর", "দুপচাঁচিয়া", "ধুনট", "নন্দীগ্রাম", "গাবতলী", "শেরপুর", "শিবগঞ্জ", "সোনাতলা", "সারিয়াকান্দি", "কাহালু"] },
                     "Pabna": { name: "পাবনা", upazilas: ["পাবনা সদর", "ঈশ্বরদী", "আটঘরিয়া", "চাটমোহর", "বেড়া", "ভাঙ্গুড়া", "ফরিদপুর", "সুজানগর", "সাঁথিয়া", "আমিনপুর"] },
                     "Sirajganj": { name: "সিরাজগঞ্জ", upazilas: ["সিরাজগঞ্জ সদর", "উল্লাপাড়া", "শাহজাদপুর", "রায়গঞ্জ", "বেলকুচি", "চৌহালী", "তাড়াশ", "কাজীপুর", "কামারখন্দ", "সলঙ্গা"] },
@@ -995,7 +1079,7 @@
             "Khulna": {
                 name: "খুলনা",
                 districts: {
-                    "Khulna": { name: "খুলনা", upazilas: ["খুলনা সদর", "সোনাডাঙ্গা", "খালিশপুর", "দৌলতপুর", "খানজাহান আলী", "আড়ংঘাটা", "হরিণটানা", "লবণচরা", "টুটপাড়া", "বটিয়াঘাটা", "দাকোপ", "ডুমুরিয়া", "দিঘলিয়া", "কয়রা", "পাইকগাছা", "ফুলতলা", "রূপসা", "তেরখাদা"] },
+                    "Khulna": { name: "খুলনা", upazilas: ["খুলনা সদর রাজস্ব সার্কেল", "বটিয়াঘাটা", "দাকোপ", "ডুমুরিয়া", "দিঘলিয়া", "কয়রা", "পাইকগাছা", "ফুলতলা", "রূপসা", "তেরখাদা"] },
                     "Jashore": { name: "যশোর", upazilas: ["যশোর সদর", "অভয়নগর", "বাঘারপাড়া", "চৌগাছা", "ঝিকরগাছা", "কেশবপুর", "মণিরামপুর", "শার্শা"] },
                     "Jhenaidah": { name: "ঝিনাইদহ", upazilas: ["ঝিনাইদহ সদর", "কালীগঞ্জ", "কোটচাঁদপুর", "মহেশপুর", "শৈলকূপা", "হরিণাকুণ্ডু"] },
                     "Kushtia": { name: "কুষ্টিয়া", upazilas: ["কুষ্টিয়া সদর", "কুমারখালী", "খোকসা", "দৌলতপুর", "ভেড়ামারা", "মিরপুর"] },
@@ -1010,7 +1094,7 @@
             "Sylhet": {
                 name: "সিলেট",
                 districts: {
-                    "Sylhet": { name: "সিলেট", upazilas: ["সিলেট মহানগর রাজস্ব সার্কেল", "সিলেট সদর" , "কোতোয়ালী", "জালালাবাদ", "এয়ারপোর্ট", "মোগলাবাজার", "শাহপরান", "দক্ষিণ সুরমা", "বিশ্বনাথ", "ওসমানীনগর", "বালাগঞ্জ", "ফেঞ্চুগঞ্জ", "গোলাপগঞ্জ", "বিয়ানীবাজার", "জকিগঞ্জ", "কানাইঘাট", "জৈন্তাপুর", "গোয়াইনঘাট", "কোম্পানীগঞ্জ"] },
+                    "Sylhet": { name: "সিলেট", upazilas: ["সিলেট মহানগর রাজস্ব সার্কেল", "সিলেট সদর" , "বালাগঞ্জ", "বিয়ানীবাজার","বিশ্বনাথ", "কোম্পানীগঞ্জ", "দক্ষিণ সুরমা", "ফেঞ্চুগঞ্জ", "গোলাপগঞ্জ", "গোয়াইনঘাট", "জৈন্তাপুর", "কানাইঘাট", "জকিগঞ্জ", "ওসমানীনগর"] },
                     "Sunamganj": { name: "সুনামগঞ্জ", upazilas: ["সুনামগঞ্জ সদর", "ছাতক", "জগন্নাথপুর", "দিরাই", "শাল্লা", "ধর্মপাশা", "মধ্যনগর", "তাহিরপুর", "বিশ্বম্ভরপুর", "দোয়ারাবাজার", "জামালগঞ্জ", "শান্তিগঞ্জ"] },
                     "Moulvibazar": { name: "মৌলভীবাজার", upazilas: ["মৌলভীবাজার সদর", "শ্রীমঙ্গল", "কমলগঞ্জ", "কুলাউড়া", "বড়লেখা", "জুড়ী", "রাজনগর"] },
                     "Habiganj": { name: "হবিগঞ্জ", upazilas: ["হবিগঞ্জ সদর", "নবীগঞ্জ", "বাহুবল", "চুনারুঘাট", "মাধবপুর", "লাখাই", "বানিয়াচং", "আজমিরীগঞ্জ", "শায়েস্তাগঞ্জ"] }
@@ -1019,7 +1103,7 @@
             "Rangpur": {
                 name: "রংপুর",
                 districts: {
-                    "Rangpur": { name: "রংপুর", upazilas: ["রংপুর সদর", "কোতোয়ালী", "তাজহাট", "মাহিগঞ্জ", "হারাগাছ", "পরশুরাম", "হাজিরহাট", "পীরগাছা", "কাউনিয়া", "গংগাচড়া", "তারাগঞ্জ", "বদরগঞ্জ", "মিঠাপুকুর", "পীরগঞ্জ"] },
+                    "Rangpur": { name: "রংপুর", upazilas: ["রংপুর মহানগর রাজস্ব সার্কেল","রংপুর সদর", "বদরগঞ্জ", "গংগাচড়া", "কাউনিয়া", "মিঠাপুকুর", "পীরগাছা", "পীরগঞ্জ", "তারাগঞ্জ"] },
                     "Dinajpur": { name: "দিনাজপুর", upazilas: ["দিনাজপুর সদর", "বিরামপুর", "বীরগঞ্জ", "বোচাগঞ্জ", "বিরল" , "চিরিরবন্দর", "ফুলবাড়ী", "ঘোড়াঘাট", "হাকিমপুর", "কাহারোল", "খানসামা", "নবাবগঞ্জ", "পার্বতীপুর"] },
                     "Kurigram": { name: "কুড়িগ্রাম", upazilas: ["কুড়িগ্রাম সদর", "রাজারহাট", "ফুলবাড়ী", "নাগেশ্বরী", "ভূরুঙ্গামারী", "রৌমারী", "চর রাজিবপুর", "চিলমারী", "উলিপুর", "কচাকাটা", "ঢুষমারা"] },
                     "Gaibandha": { name: "গাইবান্ধা", upazilas: ["গাইবান্ধা সদর", "সাদুল্লাপুর", "সুন্দরগঞ্জ", "গোবিন্দগঞ্জ", "পলাশবাড়ী", "সাঘাটা", "ফুলছড়ি"] },
@@ -1032,7 +1116,7 @@
             "Mymensingh": {
                 name: "ময়মনসিংহ",
                 districts: {
-                    "Mymensingh": { name: "ময়মনসিংহ", upazilas: ["ময়মনসিংহ সদর", "কোতোয়ালী", "মুক্তাগাছা", "ভালুকা", "ত্রিশাল", "হালুয়াঘাট", "গফরগাঁও", "পাগলা", "ধোবাউড়া", "ঈশ্বরগঞ্জ", "ফুলপুর", "গৌরীপুর", "নান্দাইল", "ফুলবাড়ীয়া", "তারাকান্দা"] },
+                    "Mymensingh": { name: "ময়মনসিংহ", upazilas: ["ময়মনসিংহ সদর", "ভালুকা", "ধোবাউড়া", "ফুলবাড়ীয়া", "গফরগাঁও", "গৌরীপুর", "হালুয়াঘাট", "ঈশ্বরগঞ্জ", "মুক্তাগাছা", "নান্দাইল", "ফুলপুর", "ত্রিশাল","তারাকান্দা"] },
                     "Jamalpur": { name: "জামালপুর", upazilas: ["জামালপুর সদর", "বকশীগঞ্জ", "দেওয়ানগঞ্জ", "ইসলামপুর", "নারুন্দি" , "মাদারগঞ্জ", "মেলান্দহ", "সরিষাবাড়ী"] },
                     "Netrokona": { name: "নেত্রকোণা", upazilas: ["নেত্রকোণা সদর", "বারহাট্টা", "দুর্গাপুর", "খালিয়াজুরী", "কলমাকান্দা", "কেন্দুয়া", "মদন", "মোহনগঞ্জ", "পূর্বধলা", "আটপাড়া"] },
                     "Sherpur": { name: "শেরপুর", upazilas: ["শেরপুর সদর", "ঝিনাইগাতী", "নকলা", "নালিতাবাড়ী", "শ্রীবরদী"] }
@@ -1041,7 +1125,7 @@
             "Barishal": {
                 name: "বরিশাল",
                 districts: {
-                    "Barishal": { name: "বরিশাল", upazilas: ["বরিশাল সদর", "কোতোয়ালী", "এয়ারপোর্ট", "কাউনিয়া", "বন্দর", "বাকেরগঞ্জ", "বাবুগঞ্জ", "গৌরনদী", "উজিরপুর", "বানারীপাড়া", "মুলাদী", "হিজলা", "মেহেন্দিগঞ্জ", "আগৈলঝাড়া"] },
+                    "Barishal": { name: "বরিশাল", upazilas: ["বরিশাল সদর", "আগৈলঝাড়া", "বাবুগঞ্জ", "বাকেরগঞ্জ", "বানারী পাড়া", "গৌরনদী", "হিজলা", "মেহেন্দিগঞ্জ",  "মুলাদী", "উজিরপুর"] },
                     "Patuakhali": { name: "পটুয়াখালী", upazilas: ["পটুয়াখালী সদর", "বাউফল", "গলাচিপা", "দশমিনা", "কলাপাড়া", "মির্জাগঞ্জ", "দুমকি", "রাঙ্গাবালি" , "মহিপুর"] },
                     "Bhola": { name: "ভোলা", upazilas: ["ভোলা সদর", "বোরহানউদ্দিন", "চরফ্যাশন", "দৌলতখান", "লালমোহন", "মনপুরা", "তজুমদ্দিন", "দুলারহাট", "শশীভূষণ", "দক্ষিণ আইচা"] },
                     "Pirojpur": { name: "পিরোজপুর", upazilas: ["পিরোজপুর সদর", "কাউখালী", "নাজিরপুর", "নেছারাবাদ/স্বরূপকাঠি", "ভাণ্ডারিয়া", "মঠবাড়িয়া", "জিয়ানগর" , "ইন্দুরকানী"] },
@@ -1118,11 +1202,29 @@
     // জেনারেট বাটনে ক্লিকের পর বাংলা নাম রিটার্ন করার জন্য (এখানে পেস্ট করুন)
         const getGeoVal = (id) => {
             const element = document.getElementById(id);
-            if (!element) return '[তথ্য প্রদান করা হয়নি]';
+            let defaultValue = '[তথ্য প্রদান করা হয়নি]';
+            
+            if (!element) return defaultValue;
+            
             if (element.tagName === 'SELECT') {
-                return element.options[element.selectedIndex].text || '[তথ্য প্রদান করা হয়নি]';
+                if (element.selectedIndex > 0) {
+                    element.style.borderColor = ''; // সিলেক্ট করলে বর্ডার স্বাভাবিক
+                    return element.options[element.selectedIndex].text;
+                } else {
+                    element.style.borderColor = '#ef4444'; // সিলেক্ট না করলে রেড
+                    return defaultValue;
+                }
             }
-            return element.value || '[তথ্য প্রদান করা হয়নি]';
+            
+            // ইনপুট ফিল্ডের জন্য
+            let val = element.value.trim();
+            if (val === '') {
+                element.style.borderColor = '#ef4444';
+                return defaultValue;
+            } else {
+                element.style.borderColor = '';
+                return val;
+            }
         };
 
         
