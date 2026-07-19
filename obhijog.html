@@ -713,7 +713,7 @@
                     <div class="form-group"><label>ডেলিভারির তারিখ</label><input type="date" id="rr_deliveryDate" class="form-input"></div>
                     <div class="form-group"><label>আবেদন নম্বর</label><input type="text" id="rr_appNo" class="form-input" placeholder="যেমন: 12345678"></div>
                     <div class="form-group"><label>জেলা প্রশাসকের কার্যালয়</label><input type="text" id="rr_dcOffice" class="form-input" placeholder="যেমন: ঢাকা"></div>
-                    <div class="form-group"><label>ডেলিভারির মাধ্যম</label><select id="rr_deliveryType" class="form-input"><option value="অফিস কাউন্টার">অফিস কাউন্টার</option><option value="ডাকযোগ">ডাকযোগ</option></select></div>
+                    <div class="form-group"><label>ডেলিভারির মাধ্যম</label><select id="rr_deliveryType" class="form-input"><option value="অফিস কাউন্টার">মাধ্যম সিলেক্ট করুন</option><option value="অফিস কাউন্টার">অফিস কাউন্টার</option><option value="ডাকযোগ">ডাকযোগ</option></select></div>
                     <div class="form-group"><label>নাগরিকের নাম</label><input type="text" id="rr_name" class="form-input" placeholder="নাগরিকের নাম"></div>
                     <div class="form-group"><label>জাতীয় পরিচয় পত্র নম্বর</label><input type="number" id="rr_nid" class="form-input" placeholder="NID নম্বর"></div>
                     <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="rr_dob" class="form-input"></div>
@@ -936,10 +936,22 @@
         };
         // Helper function to format date (YYYY-MM-DD to DD-MM-YYYY)
         const formatDate = (dateStr) => {
-            if (!dateStr) return '[তারিখ প্রদান করা হয়নি]';
-
-            const [year, month, day] = dateStr.split('-');
-
+            // যদি dateStr খালি বা undefined বা '[তথ্য প্রদান করা হয়নি]' হয়
+            if (!dateStr || dateStr === '[তথ্য প্রদান করা হয়নি]' || dateStr === 'undefined') {
+                return '[তারিখ প্রদান করা হয়নি]';
+            }
+            
+            // যদি সঠিক ফরম্যাটে না হয় (যেমন: YYYY-MM-DD)
+            if (!dateStr.includes('-')) {
+                return '[তারিখ প্রদান করা হয়নি]';
+            }
+            
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) {
+                return '[তারিখ প্রদান করা হয়নি]';
+            }
+            
+            const [year, month, day] = parts;
             return toBanglaNumber(`${day}/${month}/${year}`);
         };
 
@@ -955,8 +967,7 @@
                 const upazila = getGeoVal('rr_upazila');
 
                 outputText = `নাগরিক ${getVal('rr_type')} খতিয়ানের সার্টিফাইড কপির জন্য অনলাইনে আবেদন করেছিলেন।
-আবেদনের তারিখঃ ${formatDate(getVal('rr_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('rr_deliveryDate'))}। নির্ধারিত সময় অতিক্রম হয়ে গিয়েছে কিন্তু নাগরিক খতিয়ান ডেলিভারি পান নি। আবেদন নম্বরঃ ${getVal('rr_appNo')}। আবেদন নম্বর ট্র্যাকিং করে দেখা গিয়েছে, আবেদনটি গ্রহণ করা হয়েছে। জেলা প্রশাসকের কার্যালয়, ${getVal('rr_dcOffice')}। খতিয়ান ডেলিভারির মাধ্যমঃ ${getVal('rr_deliveryType')}। নাগরিকের নামঃ ${getVal('rr_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('rr_nid')}। জন্ম তারিখঃ ${formatDate(getVal('rr_dob'))}। এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('rr_mobile')}।
-খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('rr_mouza')} , জে.এল নম্বরঃ ${getVal('rr_jl')} , খতিয়ান নম্বরঃ ${getVal('rr_khatian')}।
+আবেদনের তারিখঃ ${formatDate(getVal('rr_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('rr_deliveryDate'))}। নির্ধারিত সময় অতিক্রম হয়ে গিয়েছে কিন্তু নাগরিক খতিয়ান ডেলিভারি পান নি। আবেদন নম্বরঃ ${getVal('rr_appNo')}। আবেদন নম্বর ট্র্যাকিং করে দেখা গিয়েছে, আবেদনটি গ্রহণ করা হয়েছে। জেলা প্রশাসকের কার্যালয়, ${getVal('rr_dcOffice')}। খতিয়ান ডেলিভারির মাধ্যমঃ ${getVal('rr_deliveryType')}। নাগরিকের নামঃ ${getVal('rr_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('rr_nid')}। জন্ম তারিখঃ ${formatDate(getVal('rr_dob'))}। এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('rr_mobile')}, খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('rr_mouza')} , জে.এল নম্বরঃ ${getVal('rr_jl')} , খতিয়ান নম্বরঃ ${getVal('rr_khatian')}। 
 নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে জেলা প্রশাসক মহোদয়ের দৃষ্টি আকর্ষণ করেছেন।`;
             } else if (category === 'landTax') {
                 const bibhag = getGeoVal('lt_division');
@@ -965,7 +976,7 @@
 
                 outputText = `নাগরিক গত ${formatDate(getVal('lt_attachDate'))} তারিখে ভূমি উন্নয়ন কর পরিশোধ করার জন্য নিবন্ধিত প্রোফাইলে খতিয়ানের তথ্য সংযুক্ত করেছেন।
 খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('lt_mouza')} , খতিয়ান নম্বরঃ ${getVal('lt_khatian')}, হোল্ডিং নম্বরঃ ${getVal('lt_holding')} । এক্ষেত্রে ৪৮ ঘণ্টা সময় অতিক্রম হয়ে যাওয়ার পরেও ${getVal('lt_landOffice')} ইউনিয়ন ভূমি অফিস থেকে নাগরিকের হোল্ডিং এর তথ্যটি অনুমোদন করা হয়নি।
-বর্তমানে খতিয়ানের তথ্যটি অপেক্ষমান হিসেবে রয়েছে। নাগরিকের নাম- ${getVal('lt_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('lt_nid')} , জন্ম তারিখঃ ${formatDate(getVal('lt_dob'))} , এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('lt_mobile')} , পাসওয়ার্ডঃ ${getVal('lt_password')}।
+বর্তমানে খতিয়ানের তথ্যটি অপেক্ষমান হিসেবে রয়েছে। নাগরিকের নাম- ${getVal('lt_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('lt_nid')} , জন্ম তারিখঃ ${formatDate(getVal('lt_dob'))} , এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('lt_mobile')} , পাসওয়ার্ডঃ ${getVal('lt_password')}  
 নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন, দ্রুত প্রতিকার চেয়ে ঊর্ধ্বতন কর্মকর্তাদের দৃষ্টি আকর্ষণ করেছেন।`;
 
             } else if (category === 'namjari') {
@@ -981,8 +992,10 @@
 
             // টেক্সট সেট করা এবং আউটপুট এরিয়া দেখানো
             // টেক্সট সেট করা এবং আউটপুট এরিয়া দেখানো
-            let formattedText = outputText.replace(/\[তথ্য প্রদান করা হয়নি\]|\[তথ্য প্রদান করা হয়নি\]/g, 
-                '<span style="color: #ef4444; font-weight: bold;">[তথ্য প্রদান করা হয়নি]</span>'
+            let formattedText = outputText.replace(/\[তথ্য প্রদান করা হয়নি\]|\[তথ্য প্রদান করা হয়নি\]|\[তারিখ প্রদান করা হয়নি\]|\[তারিখ প্রদান করা হয়নি\]/g, 
+                function(match) {
+                    return '<span style="color: #ef4444; font-weight: bold;">' + match + '</span>';
+                }
             );
             document.getElementById('finalText').innerHTML = formattedText.replace(/\n/g, '<br>');
             const outputArea = document.getElementById('outputArea');
