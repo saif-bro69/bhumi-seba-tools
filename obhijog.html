@@ -334,13 +334,15 @@
             display: flex;
             gap: 15px;
             margin-bottom: 30px;
+            margin-top: 10px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .tab-btn {
-            flex: 1;
-            min-width: 250px;
-            padding: 15px 20px;
+            flex: 1 1 auto;
+            min-width: 180px;
+            padding: 12px 15px;
             border: 2px solid var(--border-color);
             background: transparent;
             color: var(--text-dark);
@@ -350,6 +352,46 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
+            white-space: nowrap; /* লেখা এক লাইনে থাকবে */
+        }
+
+        /* 📱 ছোট স্ক্রিনের জন্য */
+        @media (max-width: 950px) {
+            .tabs-container {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .tab-btn {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 0;
+                font-size: 1.1rem;
+                padding: 10px 12px;
+                white-space: normal;
+                word-break: break-word;
+            }
+        }
+        @media (max-width: 720px) {
+            .tabs-container {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .tab-btn {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 0;
+                font-size: 1rem;
+                padding: 10px 12px;
+                white-space: normal;
+                word-break: break-word;
+            }
+        }
+
+        /* 📱 খুব ছোট স্ক্রিনের জন্য (৪২০px এর নিচে) */
+        @media (max-width: 420px) {
+            .tab-btn {
+                flex: 1 1 100%;
+                font-size: 1rem;
+                padding: 10px 8px;
+            }
         }
 
         .tab-btn:hover {
@@ -698,15 +740,17 @@
 
     <main>
         <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab('recordRoom', this)">রেকর্ড রুম সেবা সংক্রান্ত</button>
-            <button class="tab-btn" onclick="switchTab('landTax', this)">ভূমি উন্নয়ন কর সেবা সংক্রান্ত</button>
-            <button class="tab-btn" onclick="switchTab('namjari', this)">নামজারি সেবা সংক্রান্ত</button>
+            <button class="tab-btn active" onclick="switchTab('recordRoom', this)">পর্চা আবেদন সংক্রান্ত</button>
+            <button class="tab-btn" onclick="switchTab('mouzaMap', this)">মৌজা ম্যাপ আবেদন সংক্রান্ত</button>
+            <button class="tab-btn" onclick="switchTab('landTax', this)">হোল্ডিং অনুমোদন সংক্রান্ত</button>
+            <button class="tab-btn" onclick="switchTab('namjari', this)">নামজারি আবেদন সংক্রান্ত</button>
+            
         </div>
 
         <div class="glass-card">
             
             <div id="form-recordRoom" class="form-section active">
-                <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">রেকর্ড রুম সেবা সংক্রান্ত ইনপুট</h2>
+                <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">পর্চা আবেদন সংক্রান্ত প্রয়োজনীয় তথের ইনপুট</h2>
                 <div class="input-grid">
                     <div class="form-group"><label>খতিয়ানের ধরন</label><select id="rr_type" class="form-input"><option value="জরিপ সিলেক্ট করুন">জরিপ সিলেক্ট করুন</option><option value="সি এস">সি এস</option><option value="এস এ">এস এ</option><option value="আর এস">আর এস</option><option value="বি আর এস">বি আর এস</option><option value="বি ডি এস">বি ডি এস</option><option value="নামজারি">নামজারি</option></select></div>
                     <div class="form-group"><label>আবেদনের তারিখ</label><input type="date" id="rr_applyDate" class="form-input"></div>
@@ -744,8 +788,57 @@
                 <button class="btn-primary" onclick="generateComplaint('recordRoom')">অভিযোগ জেনারেট করুন</button>
             </div>
 
+            <div id="form-mouzaMap" class="form-section">
+                    <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">মৌজা ম্যাপ আবেদন সংক্রান্ত ইনপুট</h2>
+                    <div class="input-grid">
+                        <div class="form-group"><label>আবেদনের তারিখ</label><input type="date" id="mm_applyDate" class="form-input"></div>
+                        <div class="form-group"><label>ডেলিভারির তারিখ</label><input type="date" id="mm_deliveryDate" class="form-input"></div>
+                        <div class="form-group"><label>আবেদন নম্বর</label><input type="text" id="mm_appNo" class="form-input" placeholder="আবেদন নম্বর"></div>
+                        <div class="form-group"><label>আবেদনের বর্তমান অবস্থা</label><input type="text" id="mm_status" class="form-input" placeholder="যেমন: প্রক্রিয়াধীন"></div>
+                        <div class="form-group"><label>নাগরিকের নাম</label><input type="text" id="mm_name" class="form-input" placeholder="নাগরিকের নাম"></div>
+                        <div class="form-group"><label>জাতীয় পরিচয় পত্র নম্বর</label><input type="number" id="mm_nid" class="form-input" placeholder="NID নম্বর"></div>
+                        <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="mm_dob" class="form-input"></div>
+                        <div class="form-group"><label>প্রোফাইলের মোবাইল নম্বর</label><input type="number" id="mm_mobile" class="form-input" placeholder="01XXXXXXXXX"></div>
+                        <div class="form-group">
+                            <label>বিভাগ</label>
+                            <select id="mm_division" class="form-input" onchange="updateDistricts('mm')">
+                                <option value="">বিভাগ নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>জেলা</label>
+                            <select id="mm_district" class="form-input" onchange="updateUpazilas('mm')">
+                                <option value="">আগে বিভাগ সিলেক্ট করুন</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>উপজেলা</label>
+                            <select id="mm_upazila" class="form-input">
+                                <option value="">আগে জেলা সিলেক্ট করুন</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>মৌজা</label><input type="text" id="mm_mouza" class="form-input" placeholder="মৌজা"></div>
+                        <div class="form-group"><label>জে.এল নম্বর</label><input type="text" id="mm_jl" class="form-input" placeholder="জে.এল নম্বর"></div>
+                        <div class="form-group"><label>সিট নম্বর</label><input type="text" id="mm_sitNo" class="form-input" placeholder="সিট নম্বর"></div>
+                        <div class="form-group">
+                            <label>সার্ভে টাইপ</label>
+                            <select id="mm_surveyType" class="form-input">
+                                <option value="">জরিপ সিলেক্ট করুন</option>
+                                <option value="সি এস">সি এস</option>
+                                <option value="এস এ">এস এ</option>
+                                <option value="আর এস">আর এস</option>
+                                <option value="বি এস">বি এস</option>
+                                <option value="বি আর এস">বি আর এস</option>
+                                <option value="বি ডি এস">বি ডি এস</option>
+                                <option value="নামজারি">দিয়ারা</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="generateComplaint('mouzaMap')">অভিযোগ জেনারেট করুন</button>
+                    </div>
+
             <div id="form-landTax" class="form-section">
-                <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">ভূমি উন্নয়ন কর সেবা সংক্রান্ত ইনপুট</h2>
+                <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">হোল্ডিং অনুমোদন সংক্রা প্রয়োজনীয় তথের ইনপুট</h2>
                 <div class="input-grid">
                     <div class="form-group"><label>খতিয়ান সংযুক্ত তারিখ</label><input type="date" id="lt_attachDate" class="form-input"></div>
                     
@@ -782,7 +875,7 @@
             </div>
 
             <div id="form-namjari" class="form-section">
-                <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">নামজারি সেবা সংক্রান্ত ইনপুট</h2>
+                <h2 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">নামজারি আবেদন সংক্রান্ত প্রয়োজনীয় তথের ইনপুট</h2>
                 <div class="input-grid">
                     <div class="form-group"><label>আবেদনের তারিখ</label><input type="date" id="nj_applyDate" class="form-input"></div>
                     <div class="form-group"><label>আবেদন নম্বর</label><input type="text" id="nj_appNo" class="form-input" placeholder="আবেদন নম্বর"></div>
@@ -813,8 +906,10 @@
                     <div class="form-group"><label>জাতীয় পরিচয় পত্র নম্বর</label><input type="number" id="nj_nid" class="form-input" placeholder="NID নম্বর"></div>
                     <div class="form-group"><label>জন্ম তারিখ</label><input type="date" id="nj_dob" class="form-input"></div>
                     <div class="form-group"><label>মোবাইল নম্বর</label><input type="number" id="nj_mobile" class="form-input" placeholder="01XXXXXXXXX"></div>
-                    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="lt_password" class="form-input" placeholder="পাসওয়ার্ড"></div>
+                    <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="nj_password" class="form-input" placeholder="পাসওয়ার্ড"></div>
                 </div>
+
+                
                 <button class="btn-primary" onclick="generateComplaint('namjari')">অভিযোগ জেনারেট করুন</button>
             </div>
 
@@ -967,16 +1062,24 @@
                 const upazila = getGeoVal('rr_upazila');
 
                 outputText = `নাগরিক ${getVal('rr_type')} খতিয়ানের সার্টিফাইড কপির জন্য অনলাইনে আবেদন করেছিলেন।
-আবেদনের তারিখঃ ${formatDate(getVal('rr_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('rr_deliveryDate'))}। নির্ধারিত সময় অতিক্রম হয়ে গিয়েছে কিন্তু নাগরিক খতিয়ান ডেলিভারি পান নি। আবেদন নম্বরঃ ${getVal('rr_appNo')}। আবেদন নম্বর ট্র্যাকিং করে দেখা গিয়েছে, আবেদনটি গ্রহণ করা হয়েছে। জেলা প্রশাসকের কার্যালয়, ${getVal('rr_dcOffice')}। খতিয়ান ডেলিভারির মাধ্যমঃ ${getVal('rr_deliveryType')}। নাগরিকের নামঃ ${getVal('rr_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('rr_nid')}। জন্ম তারিখঃ ${formatDate(getVal('rr_dob'))}। এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('rr_mobile')}, খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('rr_mouza')} , জে.এল নম্বরঃ ${getVal('rr_jl')} , খতিয়ান নম্বরঃ ${getVal('rr_khatian')}। 
+আবেদনের তারিখঃ ${formatDate(getVal('rr_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('rr_deliveryDate'))}। নির্ধারিত সময় অতিক্রম হয়ে গিয়েছে কিন্তু নাগরিক খতিয়ান ডেলিভারি পান নি। আবেদন নম্বরঃ ${getVal('rr_appNo')}। আবেদন নম্বর ট্র্যাকিং করে দেখা গিয়েছে, আবেদনটি গ্রহণ করা হয়েছে। জেলা প্রশাসকের কার্যালয়, ${getVal('rr_dcOffice')}। খতিয়ান ডেলিভারির মাধ্যমঃ ${getVal('rr_deliveryType')}। নাগরিকের নামঃ ${getVal('rr_name')}, এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('rr_nid')}, জন্ম তারিখঃ ${formatDate(getVal('rr_dob'))}, এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('rr_mobile')}। খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('rr_mouza')}, জে.এল নম্বরঃ ${getVal('rr_jl')}, খতিয়ান নম্বরঃ ${getVal('rr_khatian')}। 
 নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে জেলা প্রশাসক মহোদয়ের দৃষ্টি আকর্ষণ করেছেন।`;
+            } else if (category === 'mouzaMap') {
+    const bibhag = getGeoVal('mm_division');
+    const jela = getGeoVal('mm_district');
+    const upazila = getGeoVal('mm_upazila');
+
+                outputText = `নাগরিক মৌজা ম্যাপের জন্য অনলাইনে আবেদন করেছিলেন। আবেদনের তারিখঃ ${formatDate(getVal('mm_applyDate'))} এবং ডেলিভারির তারিখঃ ${formatDate(getVal('mm_deliveryDate'))}। নির্ধারিত সময়সীমা অতিক্রম হয়েছে, কিন্তু নাগরিক এখনো তার মৌজা ম্যাপের কপি ডেলিভারি পাননি। ডাকযোগ মাধ্যমে ডেলিভারি পেতে আবেদন করেছিলেন।
+আবেদন নম্বরঃ ${getVal('mm_appNo')}। আবেদন নম্বর ট্রাকিং করে দেখা গিয়েছে, ${getVal('mm_status')}। ভূমি রেকর্ড ও জরিপ অধিদপ্তর। নাগরিকের নাম- ${getVal('mm_name')}, এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('mm_nid')}, জন্ম তারিখঃ ${formatDate(getVal('mm_dob'))}, এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('mm_mobile')}, মৌজা ম্যাপের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('mm_mouza')}, জে এল নম্বরঃ ${getVal('mm_jl')}, সিট নম্বরঃ ${getVal('mm_sitNo')}, সার্ভে টাইপঃ ${getVal('mm_surveyType')}। 
+নাগরিক বিষয়টি নিয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে উর্ধ্বতন কর্মকর্তার দৃষ্টি আকর্ষণ করছেন।`;
             } else if (category === 'landTax') {
                 const bibhag = getGeoVal('lt_division');
                 const jela = getGeoVal('lt_district');
                 const upazila = getGeoVal('lt_upazila');
 
                 outputText = `নাগরিক গত ${formatDate(getVal('lt_attachDate'))} তারিখে ভূমি উন্নয়ন কর পরিশোধ করার জন্য নিবন্ধিত প্রোফাইলে খতিয়ানের তথ্য সংযুক্ত করেছেন।
-খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('lt_mouza')} , খতিয়ান নম্বরঃ ${getVal('lt_khatian')}, হোল্ডিং নম্বরঃ ${getVal('lt_holding')} । এক্ষেত্রে ৪৮ ঘণ্টা সময় অতিক্রম হয়ে যাওয়ার পরেও ${getVal('lt_landOffice')} ইউনিয়ন ভূমি অফিস থেকে নাগরিকের হোল্ডিং এর তথ্যটি অনুমোদন করা হয়নি।
-বর্তমানে খতিয়ানের তথ্যটি অপেক্ষমান হিসেবে রয়েছে। নাগরিকের নাম- ${getVal('lt_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('lt_nid')} , জন্ম তারিখঃ ${formatDate(getVal('lt_dob'))} , এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('lt_mobile')} , পাসওয়ার্ডঃ ${getVal('lt_password')}  
+খতিয়ানের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}, মৌজাঃ ${getVal('lt_mouza')}, খতিয়ান নম্বরঃ ${getVal('lt_khatian')}, হোল্ডিং নম্বরঃ ${getVal('lt_holding')}। এক্ষেত্রে ৪৮ ঘণ্টা সময় অতিক্রম হয়ে যাওয়ার পরেও ${getVal('lt_landOffice')} ইউনিয়ন ভূমি অফিস থেকে নাগরিকের হোল্ডিং এর তথ্যটি অনুমোদন করা হয়নি।
+বর্তমানে খতিয়ানের তথ্যটি অপেক্ষমান হিসেবে রয়েছে। নাগরিকের নাম- ${getVal('lt_name')}। এলএসজি প্রোফাইলের জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('lt_nid')}, জন্ম তারিখঃ ${formatDate(getVal('lt_dob'))}, এলএসজি প্রোফাইলের মোবাইল নম্বরঃ ${getVal('lt_mobile')}, পাসওয়ার্ডঃ ${getVal('lt_password')}  
 নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন, দ্রুত প্রতিকার চেয়ে ঊর্ধ্বতন কর্মকর্তাদের দৃষ্টি আকর্ষণ করেছেন।`;
 
             } else if (category === 'namjari') {
@@ -985,11 +1088,10 @@
                 const upazila = getGeoVal('nj_upazila');
 
                 outputText = `নাগরিক গত ${formatDate(getVal('nj_applyDate'))} তারিখে নামজারির জন্য অনলাইনে আবেদন করেছিলেন। নির্ধারিত ২৮ কার্য দিবস সময় অতিক্রম হয়ে গিয়েছে কিন্তু নামজারি আবেদনের কার্যক্রম সম্পন্ন হয়নি।
-নামজারি আবেদন নম্বরঃ ${getVal('nj_appNo')}। নামজারি মামলা নম্বরঃ ${getVal('nj_caseNo')}। নামজারি আবেদনের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}। আবেদনটির বর্তমান অবস্থাঃ ${getVal('nj_status')}। আবেদনটি বর্তমানে যার নিকট রয়েছে- ${getVal('nj_withWhom')}। সংশ্লিষ্ট অফিসঃ ${getVal('nj_office')}।
-আবেদনকারীর নাম- ${getVal('nj_name')}, আবেদনে ব্যবহৃত জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('nj_nid')}, জন্ম তারিখঃ ${formatDate(getVal('nj_dob'))}, আবেদনে ব্যবহৃত মোবাইল নম্বরঃ ${getVal('nj_mobile')}, পাসওয়ার্ডঃ ${getVal('lt_password')}।
+নামজারি আবেদন নম্বরঃ ${getVal('nj_appNo')}, নামজারি মামলা নম্বরঃ ${getVal('nj_caseNo')}। নামজারি আবেদনের বিভাগঃ ${bibhag}, জেলাঃ ${jela}, উপজেলাঃ ${upazila}। আবেদনটির বর্তমান অবস্থাঃ ${getVal('nj_status')}। আবেদনটি বর্তমানে যার নিকট রয়েছে- ${getVal('nj_withWhom')}। সংশ্লিষ্ট অফিসঃ উপজেলা ভূমি অফিস, ${getVal('nj_office')}।
+আবেদনকারীর নাম- ${getVal('nj_name')}, আবেদনে ব্যবহৃত জাতীয় পরিচয় পত্র নম্বরঃ ${getVal('nj_nid')}, জন্ম তারিখঃ ${formatDate(getVal('nj_dob'))}, আবেদনে ব্যবহৃত মোবাইল নম্বরঃ ${getVal('nj_mobile')}, পাসওয়ার্ডঃ ${getVal('nj_password')}  
 নাগরিক এই বিষয়ে অভিযোগ জানিয়েছেন এবং দ্রুত প্রতিকার চেয়ে ঊর্ধ্বতন কর্মকর্তাদের দৃষ্টি আকর্ষণ করেছেন।`;
-            }
-
+            }     
             // টেক্সট সেট করা এবং আউটপুট এরিয়া দেখানো
             // টেক্সট সেট করা এবং আউটপুট এরিয়া দেখানো
             let formattedText = outputText.replace(/\[তথ্য প্রদান করা হয়নি\]|\[তথ্য প্রদান করা হয়নি\]|\[তারিখ প্রদান করা হয়নি\]|\[তারিখ প্রদান করা হয়নি\]/g, 
@@ -1151,7 +1253,7 @@
 
     // পেজ লোড হওয়ার সাথে সাথে ৩টি সেকশনের 'বিভাগ' ড্রপডাউন পূরণ করার সঠিক কোড
         document.addEventListener("DOMContentLoaded", function() {
-            const prefixes = ['rr', 'lt', 'nj'];
+            const prefixes = ['rr', 'lt', 'nj', 'mm'];
             prefixes.forEach(prefix => {
                 const divSelect = document.getElementById(`${prefix}_division`);
                 if (divSelect) {
