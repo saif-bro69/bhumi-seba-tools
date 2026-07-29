@@ -1,0 +1,423 @@
+<!-- footer.html – সম্পূর্ণ ফুটার কম্পোনেন্ট (শুধু ফুটার, CSS ও JS) -->
+<style>
+    /* ===================================================
+       PREMIUM FOOTER STYLES (সব ফুটার কোড এখানে)
+       =================================================== */
+
+    /* ডিফল্ট ভ্যালু সংজ্ঞা (প্যারেন্ট পেজে না থাকলে) */
+    :root {
+        --primary-blue: #1a56db;
+        --primary-glow: #3b82f6;
+        --accent-gradient: linear-gradient(135deg, #1a56db 10%, #10b981 90%);
+        --glow-blue: 0 0 15px rgba(26,86,219,0.3);
+        --border-color: rgba(226, 232, 240, 0.6);
+        --shadow-sm: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0,0,0,0.02);
+        --shadow-hover: 0 35px 45px -20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59,130,246,0.2);
+        --text-soft: #334155;
+    }
+
+    /* ফন্ট – বাংলা সংখ্যার জন্য */
+    @font-face {
+        font-family: 'StandardBengaliDigits';
+        src: local('SolaimanLipi'), local('Kalpurush'), local('Siyam Rupali'),
+             url('https://fonts.gstatic.com/s/notosansbengali/v15/0Fl3VHe9939O2w3A_S2X-TlsN-NreB8A.woff2') format('woff2');
+        unicode-range: U+09E6-09EF;
+    }
+
+    /* অ্যানিমেশন কীফ্রেম */
+    @keyframes floatUp {
+        0% { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    
+
+    /* ---------- PREMIUM FOOTER ---------- */
+     /* ===== FOOTER CSS ===== */
+    .premium-footer {
+        position: relative;
+        z-index: 2;
+        margin-top: 3rem;
+        padding: 0 1.8rem 1.8rem;
+    }
+
+    .footer-glass {
+        background: rgb(30, 41, 59) !important;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-radius: 42px;
+        padding: 2.8rem 2.8rem 2rem;
+        box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+        transition: background 0.4s ease, border-color 0.3s ease, box-shadow 0.4s ease;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.2fr;
+        gap: 2.5rem;
+    }
+
+    .footer-brand p {
+        color: #cbd5e1 !important;
+        line-height: 1.6;
+        margin-top: 0.75rem;
+        max-width: 280px;
+        font-size: 0.95rem;
+    }
+
+    .footer-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        margin-bottom: 1.2rem;
+        color: #f1f5f9 !important;
+        letter-spacing: -0.2px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 28px;
+        height: 3px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #1a56db 10%, #10b981 90%);
+        transition: width 0.4s ease;
+    }
+
+    .footer-links:hover .footer-title::after,
+    .footer-contact:hover .footer-title::after {
+        width: 48px;
+    }
+
+    .footer-links ul,
+    .footer-contact ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .footer-links ul li a,
+    .footer-contact ul li a,
+    .footer-contact ul li span {
+        color: #cbd5e1 !important;
+        text-decoration: none;
+        font-size: 0.93rem;
+        transition: all 0.25s ease;
+        display: inline-block;
+        padding: 2px 0;
+        position: relative;
+    }
+
+    .footer-links ul li a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, #1a56db 10%, #10b981 90%);
+        border-radius: 4px;
+        transition: width 0.35s ease;
+    }
+
+    .footer-links ul li a:hover {
+        color: #3b82f6 !important;
+        transform: translateX(6px);
+    }
+
+    .footer-links ul li a:hover::before {
+        width: 100%;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 14px;
+        margin-top: 1.4rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-social .social-link {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(59, 130, 246, 0.12) !important;
+        color: #cbd5e1 !important;
+        transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1) !important;
+        text-decoration: none;
+    }
+
+    .footer-social .social-link:hover {
+        background: #1a56db !important;
+        color: white !important;
+        transform: translateY(-5px) !important;
+        box-shadow: 0 8px 20px -8px rgba(26, 86, 219, 0.4) !important;
+    }
+
+    .footer-social .social-link svg {
+        display: block;
+        width: 22px;
+        height: 22px;
+    }
+
+    .footer-social .social-link.fb { background: #1a56db !important; color: #FFFFFF !important; }
+    .footer-social .social-link.fb:hover { background: #166FE5 !important; }
+
+    .footer-social .social-link.insta { 
+        background: linear-gradient(45deg, #FFC107 0%, #FF8F00 15%, #F50057 40%, #E91E63 60%, #9C27B0 85%, #6A1B9A 100%) !important; 
+        color: #FFFFFF !important;
+    }
+    .footer-social .social-link.insta:hover { transform: scale(1.05); opacity: 0.95; }
+
+    .footer-social .social-link.x-social { background: #000000 !important; color: #FFFFFF !important; }
+    .footer-social .social-link.x-social:hover { background: #1a1a1a !important; }
+
+    .footer-social .social-link.yt { background: #e40000 !important; color: #FFFFFF !important; }
+    .footer-social .social-link.yt:hover { background: #CC0000 !important; }
+
+    .footer-social .social-link.tg { background: #0088cc !important; }
+    .footer-social .social-link.wa { background: #25D366 !important; }
+
+    .footer-social .social-link.messenger {
+        background: linear-gradient(135deg, #00B2FE 5%, #006AFF 5%, #9B26FF 90%, #FF5289 100%) !important;
+        border: none !important;
+    }
+    .footer-social .social-link.messenger:hover { transform: scale(1.05); opacity: 0.95; color: #FFFFFF !important; }
+
+    .footer-divider {
+        height: 1.7px;
+        background: rgba(51, 65, 85, 0.6) !important;
+        margin: 2.2rem 0 0.1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer-divider::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 60px;
+        height: 100%;
+        background: linear-gradient(135deg, #1a56db 10%, #10b981 90%) !important;
+        border-radius: 4px;
+        animation: shimmerDivider 6s ease-in-out infinite;
+    }
+
+    @keyframes shimmerDivider {
+        0%, 100% { left: 0; opacity: 0.6; }
+        50% { left: calc(100% - 60px); opacity: 1; }
+    }
+
+    .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.2rem 1.5rem;
+        margin-bottom: -10px;
+    }
+
+    .footer-copyright,
+    .footer-made {
+        color: #cbd5e1 !important;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 1024px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .footer-brand {
+            grid-column: 1 / -1;
+        }
+        .footer-brand p {
+            max-width: 100%;
+        }
+        .footer-glass {
+            padding: 2.2rem 2rem 1.8rem;
+        }
+        .premium-footer {
+            padding: 0 1rem 1rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 1.8rem;
+        }
+        .footer-brand {
+            grid-column: 1;
+        }
+        .footer-glass {
+            padding: 1.8rem 1.4rem 1.4rem;
+            border-radius: 32px;
+        }
+        .premium-footer {
+            padding: 0 0.8rem 0.8rem;
+            margin-top: 2rem;
+        }
+        .footer-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        .footer-social .social-link {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>
+
+<!-- ===== ফুটারের HTML (১০০% নির্ভুল) ===== -->
+<footer class="premium-footer">
+    <div class="footer-glass">
+        <div class="footer-grid">
+
+            <!-- ১. ব্র্যান্ড + বিবরণ -->
+            <div class="footer-brand">
+                <a href="index.html" class="footer-logo" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px;">
+                    <div class="logo-icon" style="width: 44px; height: 44px; border-radius: 18px; background: var(--accent-gradient); display: flex; align-items: center; justify-content: center; box-shadow: var(--glow-blue);">
+                        <svg viewBox="0 0 24 24" stroke="white" stroke-width="1.8" fill="none" width="26" height="26">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </div>
+                    <span style="font-size: 1.5rem; font-weight: 800; background: var(--accent-gradient); background-clip: text; -webkit-background-clip: text; color: transparent;">ডিজিটাল ল্যান্ড</span>
+                </a>
+                <p style="color: var(--text-soft); line-height: 1.6; margin-top: 0.75rem; max-width: 280px; font-size: 0.95rem;">
+                    ভূমি সংক্রান্ত সকল ডিজিটাল সেবা — টিকেট, অভিযোগ, ক্যালকুলেটর ও রূপান্তর টুলস এক প্ল্যাটফর্মে।
+                </p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook" class="social-link fb">
+                        <svg viewBox="0 0 320 512" width="22" height="22" fill="currentColor">
+                            <path d="M279.14 288l14.22-92.66h-88.91V135.15c0-25.35 12.42-50.06 52.24-50.06H297V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram" class="social-link insta">
+                        <svg viewBox="0 0 448 512" width="22" height="22" fill="currentColor">
+                            <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM402.4 377.6c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="X" class="social-link x-social">
+                        <svg viewBox="0 0 512 512" width="22" height="22" fill="currentColor">
+                            <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="YouTube" class="social-link yt">
+                        <svg viewBox="0 0 576 512" width="22" height="22" fill="currentColor">
+                            <path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ২. দ্রুত লিংক -->
+            <div class="footer-links">
+                <h4 class="footer-title">দ্রুত লিংক</h4>
+                <ul>
+                    <li><a href="ticket.html">🧑‍💻 টিকেট সেকশন</a></li>
+                    <li><a href="obhijog.html">📝 অভিযোগ সেকশন</a></li>
+                    <li><a href="workingday.html">📅 কার্যদিবস ক্যালকুলেটর</a></li>
+                    <li><a href="faraiz.html">⚖️ উত্তরাধিকার ক্যালকুলেটর</a></li>
+                </ul>
+            </div>
+
+            <!-- ৩. গুরুত্বপূর্ণ লিংক -->
+            <div class="footer-links">
+                <h4 class="footer-title">গুরুত্বপূর্ণ</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Release Notes</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- ৪. যোগাযোগ -->
+            <div class="footer-contact">
+                <h4 class="footer-title">যোগাযোগ</h4>
+                <ul>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">📧</span>
+                        <a href="mailto:bhumisebatools@gmail.com" style="color: var(--text-soft); text-decoration: none; transition: color 0.3s;">bhumisebatools@gmail.com</a>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">📞</span>
+                        <span style="color: var(--text-soft);">+৮৮০ ১৭০০-০০০০০০</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">📍</span>
+                        <span style="color: var(--text-soft);">তেজগাঁও, ঢাকা-১২০৮</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div> <!-- .footer-grid শেষ -->
+
+        <!-- ৫. ফুটার ডিভাইডার + কপিরাইট -->
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+
+            <div class="footer-copyright">
+                &copy; 2026 Digital Land Tools
+            </div>
+
+            <div class="footer-made">
+                Made in Bangladesh ❤️
+            </div>
+
+            <div class="footer-social">
+                <!-- Messenger -->
+                <a href="#" aria-label="Messenger" class="social-link messenger">
+                    <svg viewBox="0 0 512 512" width="22" height="22" fill="currentColor">
+                        <path d="M256.55 8C116.52 8 8 110.34 8 248.57c0 72.3 29.71 134.78 78.07 177.94 4.35 3.89 6.84 9.53 6.84 15.48l-.12 43c-.06 10.7 11.23 17.5 20.84 12.6l47.66-24.34c4.68-2.39 10.12-2.73 15.09-1.07 24.3 8.14 50.49 12.6 78.14 12.6 140.03 0 248.55-102.34 248.55-240.57S396.59 8 256.55 8zm138.52 171.27l-85 134.65c-12 19-38.62 22.88-55.57 8.24l-64.36-55.57c-4.39-3.79-10.7-3.79-15.09 0l-91.88 73.11c-14.7 11.7-34.91-5.9-25.13-22l85-134.65c12-19 38.62-22.88 55.57-8.24l64.36 55.57c4.39 3.79 10.7 3.79 15.09 0l91.88-73.11c14.7-11.7 34.91 5.9 25.13 22z"/>
+                    </svg>
+                </a>
+                <!-- Telegram -->
+                <a href="#" aria-label="Telegram" class="social-link tg">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M9.999 15.17l-.398 5.607c.57 0 .816-.245 1.11-.54l2.664-2.55 5.52 4.04c1.012.56 1.73.265 1.984-.932L23.98 3.51c.33-1.526-.552-2.123-1.536-1.757L1.51 9.835c-1.43.558-1.41 1.355-.243 1.713l5.35 1.67L19.04 5.53c.585-.387 1.118-.173.68.214"/>
+                    </svg>
+                </a>
+                <!-- WhatsApp -->
+                <a href="#" aria-label="WhatsApp" class="social-link wa">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M20.52 3.48A11.86 11.86 0 0012.04 0C5.4 0 .02 5.38.02 12.02c0 2.12.56 4.19 1.61 6.01L0 24l6.14-1.6a11.97 11.97 0 005.9 1.51h.01c6.63 0 12.01-5.38 12.01-12.01 0-3.21-1.25-6.22-3.54-8.42zM12.05 21.7a9.67 9.67 0 01-4.93-1.35l-.35-.21-3.64.95.97-3.54-.23-.36a9.64 9.64 0 01-1.49-5.17c0-5.34 4.34-9.68 9.68-9.68 2.58 0 5 .99 6.82 2.83a9.6 9.6 0 012.83 6.85c-.01 5.33-4.35 9.68-9.66 9.68zm5.3-7.25c-.29-.14-1.72-.85-1.99-.95-.27-.1-.47-.14-.67.14-.19.29-.77.95-.95 1.15-.17.19-.35.22-.64.07-.29-.14-1.23-.45-2.34-1.45-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.44.13-.58.13-.13.29-.35.43-.53.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.19 0-.5.07-.76.36-.26.29-.99.97-.99 2.37 0 1.4 1.02 2.75 1.16 2.94.14.19 2 3.05 4.84 4.28.68.29 1.21.46 1.62.59.68.22 1.29.19 1.78.12.54-.08 1.72-.7 1.96-1.37.24-.67.24-1.24.17-1.37-.07-.12-.27-.19-.56-.34z"/>
+                    </svg>
+                </a>
+            </div> <!-- .footer-social শেষ -->
+
+        </div> <!-- .footer-bottom শেষ -->
+
+    </div> <!-- .footer-glass শেষ -->
+</footer>
+
+<!-- ===== ফুটারের JavaScript ===== -->
+<script>
+    (function() {
+        // ----- Privacy Policy Link (Placeholder) -----
+        const privacyLinks = document.querySelectorAll('#privacyLink, #privacyLinkBottom');
+        privacyLinks.forEach(link => {
+            if (link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('🔒 গোপনীয়তা নীতি পৃষ্ঠাটি শীঘ্রই যুক্ত করা হবে।');
+                });
+            }
+        });
+
+        console.log('✨ প্রিমিয়াম ফুটার সক্রিয় — ডিজিটাল ল্যান্ড টুলস');
+    })();
+</script>
