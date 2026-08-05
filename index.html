@@ -50,6 +50,11 @@
             transition: background 0.4s ease, color 0.3s ease;
             overflow-x: hidden;
             position: relative;
+        
+            /* ফুটারকে নিচে পাঠাতে এই ৪টি লাইন যোগ করুন */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* subtle animated background noise */
@@ -493,23 +498,17 @@
         #overlay.show { display: block; opacity: 1; }
 
         /* Footer */
-        footer{
-            margin-top: 30px;
+        footer {
+            margin-top: auto; /* এটি কন্টেন্ট কম থাকলেও ফুটারকে ধাক্কা দিয়ে একদম নিচে পাঠাবে */
             padding: 22px 15px;
-
             text-align: center;
-
             background: linear-gradient(135deg, #0f172a, #1e293b);
             color: #ffffff;
-
             border-top: 1px solid rgba(255,255,255,0.08);
-
             box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
-
             position: relative;
             overflow: hidden;
         }
-
         /* উপরের glow effect */
         footer::before{
             content: "";
